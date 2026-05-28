@@ -1,292 +1,68 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freedom Countdown & Kas Monitoring</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --success-green: #10b981;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 35px;
-        }
-
-        /* Countdown Grid */
-        .countdown-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .time-box {
-            background: var(--card-bg);
-            padding: 20px 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-        }
-
-        .time-num {
-            font-size: 2.3rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .time-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-        }
-
-        /* Tracker Card */
-        .tracker-main {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-        }
-
-        .tracker-title {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        .split-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 25px;
-            margin-bottom: 25px;
-        }
-
-        .member-box {
-            text-align: left;
-            background: rgba(15, 23, 42, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .member-name {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-
-        .member-amount {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .total-box {
-            text-align: center;
-        }
-
-        .total-label {
-            font-size: 0.8rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-
-        .balance-total {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--success-green);
-            letter-spacing: -0.02em;
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-        }
-
-        .status-msg {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-style: italic;
-            padding: 20px 0;
-        }
-
-        @media (max-width: 480px) {
-            .time-num { font-size: 1.6rem; }
-            .split-grid { grid-template-columns: 1fr; }
-            .balance-total { font-size: 1.8rem; }
-        }
-    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; text-align: center; padding: 20px; margin: 0; }
+    .container { max-width: 500px; margin: auto; }
+    h1 { font-weight: 900; letter-spacing: -1px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+    .box { background: #1e293b; padding: 15px 5px; border-radius: 12px; border: 1px solid #334155; }
+    .num { display: block; font-size: 1.5rem; font-weight: 800; color: #38bdf8; }
+    .lab { font-size: 0.6rem; text-transform: uppercase; color: #94a3b8; }
+    .card { background: #1e293b; border-radius: 20px; padding: 25px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    .row { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; }
+    .row:first-child { border-bottom: 1px solid #334155; }
+    .name { color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
+    .val { font-weight: 700; color: #10b981; font-size: 1.1rem; }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>The Final Countdown</h1>
+    <p style="color:#64748b; margin-bottom:30px; font-size: 0.8rem;">Target: 29 Agustus 2026 • 20:00 WIB</p>
 
-    <div class="container">
-        <h1>The Final Countdown</h1>
-        <p class="subtitle">Sampai 29 Agustus 2026 • 20:00 WIB</p>
-
-        <div class="countdown-container">
-            <div class="time-box">
-                <div class="time-num" id="days">00</div>
-                <div class="time-label">Hari</div>
-            </div>
-            <div class="time-box">
-                <div class="time-num" id="hours">00</div>
-                <div class="time-label">Jam</div>
-            </div>
-            <div class="time-box">
-                <div class="time-num" id="minutes">00</div>
-                <div class="time-label">Menit</div>
-            </div>
-            <div class="time-box">
-                <div class="time-num" id="seconds">00</div>
-                <div class="time-label">Detik</div>
-            </div>
-        </div>
-
-        <div class="tracker-main">
-            <div class="tracker-title">Monitoring Tabungan Mandiri</div>
-            
-            <div id="loading-state" class="status-msg">Menyambungkan ke API Google Sheets...</div>
-
-            <div id="data-state" style="display: none;">
-                <div class="split-grid">
-                    <div class="member-box">
-                        <div class="member-name">Tabungan Anjas</div>
-                        <div id="anjas-amount" class="member-amount">Rp 0</div>
-                    </div>
-                    <div class="member-box">
-                        <div class="member-name">Tabungan Lilas</div>
-                        <div id="lilas-amount" class="member-amount">Rp 0</div>
-                    </div>
-                </div>
-
-                <div class="total-box">
-                    <div class="total-label">Total Akumulasi</div>
-                    <div id="total-amount" class="balance-total">Rp 0</div>
-                </div>
-            </div>
-        </div>
+    <div class="grid">
+      <div class="box"><span class="num" id="d">00</span><span class="lab">Hari</span></div>
+      <div class="box"><span class="num" id="h">00</span><span class="lab">Jam</span></div>
+      <div class="box"><span class="num" id="m">00</span><span class="lab">Menit</span></div>
+      <div class="box"><span class="num" id="s">00</span><span class="lab">Detik</span></div>
     </div>
 
-    <script>
-        // 1. KONFIGURASI TARGET WAKTU
-        const targetDate = new Date('August 29, 2026 20:00:00').getTime();
+    <div class="card">
+      <div class="row">
+        <span class="name">LILAS | SEPT '24</span>
+        <span class="val" id="lilas">Rp 0</span>
+      </div>
+      <div class="row" style="margin-bottom: 0; padding-bottom: 0;">
+        <span class="name">ANJAS | SEPT '24</span>
+        <span class="val" id="anjas">Rp 0</span>
+      </div>
+    </div>
+  </div>
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
+  <script>
+    const target = new Date('August 29, 2026 20:00:00').getTime();
+    setInterval(() => {
+      const diff = target - new Date().getTime();
+      if (diff > 0) {
+        document.getElementById('d').innerText = Math.floor(diff / 86400000);
+        document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000);
+        document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000);
+        document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000);
+      }
+    }, 1000);
 
-            if (difference < 0) {
-                document.querySelector('.countdown-container').innerHTML = 
-                    "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:700;'>FREEDOM! 🚀</div>";
-                clearInterval(countdownInterval);
-                return;
-            }
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
-        }
-
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-
-        // 2. KONFIGURASI API SPREADSHEET
-        const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyxbr3S0WQ4Cx4n4cpqx8K7O869xCTxUibmgA5tzuRmfeKjAY2XpSL_T_ZmWX7EwaULAQ/exec';
-
-        const formatter = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        });
-
-        async function fetchBalance() {
-            try {
-                const response = await fetch(appsScriptUrl);
-                const data = await response.json();
-                
-                if (data.error) {
-                    document.getElementById('loading-state').innerText = "Gagal memproses data.";
-                    return;
-                }
-
-                // Update data nominal
-                document.getElementById('anjas-amount').innerText = formatter.format(data.anjas);
-                document.getElementById('lilas-amount').innerText = formatter.format(data.lilas);
-                document.getElementById('total-amount').innerText = formatter.format(data.totalGabungan);
-
-                // Tampilkan dashboard
-                document.getElementById('loading-state').style.display = 'none';
-                document.getElementById('data-state').style.display = 'block';
-
-            } catch (error) {
-                console.error("API Error:", error);
-                document.getElementById('loading-state').innerText = "Koneksi Gagal (Periksa API)";
-            }
-        }
-
-        // Jalankan fetch saat load
-        fetchBalance();
-        
-        // Refresh otomatis setiap 5 menit
-        setInterval(fetchBalance, 300000);
-    </script>
+    function loadData() {
+      google.script.run.withSuccessHandler(res => {
+        const fmt = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n);
+        document.getElementById('lilas').innerText = fmt(res.lilas);
+        document.getElementById('anjas').innerText = fmt(res.anjas);
+      }).getDataTabungan();
+    }
+    
+    loadData();
+    setInterval(loadData, 60000); 
+  </script>
 </body>
 </html>

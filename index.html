@@ -3,40 +3,45 @@
 <head>
   <style>
     body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; padding-top: 50px; }
-    .box { border: 2px solid #0f0; display: inline-block; padding: 30px; border-radius: 15px; }
-    h1 { letter-spacing: 5px; text-shadow: 0 0 10px #0f0; }
-    #timer { font-size: 2em; margin: 20px 0; color: #fff; }
+    .box { border: 2px solid #0f0; padding: 30px; border-radius: 15px; display: inline-block; }
+    h1 { color: #fff; }
+    #data { font-size: 1.5em; color: #ff0; margin-bottom: 20px; }
+    #timer { font-size: 1.2em; color: #0f0; }
   </style>
 </head>
 <body>
 
 <div class="box">
   <h1>TERMINAL STATUS</h1>
-  <div id="data">Memuat data...</div>
-  <div id="timer">LOADING COUNTDOWN...</div>
+  <div id="data">Sedang mengambil data...</div>
+  <div id="timer">Countdown: menghitung...</div>
 </div>
 
 <script>
-  // 1. Ambil data dari Apps Script (via fetch kalau di GitHub, atau google.script.run)
-  fetch('https://script.google.com/macros/s/AKfycbyhLuCyzJxjYI0_Ie2A_u1ABk7qZCT09Ef5EPLswZ5EEtDAORUEhfJKcl2zbh_pP8KxJA/exec') // Ganti dengan URL deployment lo
+  // Ganti link di bawah ini dengan LINK WEB APP (exec) lo yang baru
+  const url = 'https://script.google.com/macros/s/AKfycbz0zLW0C749WRAY4cFGlQvYg4V2QxqUbq0VHfsjJdfB/dev';
+
+  fetch(url)
     .then(r => r.json())
     .then(res => {
+      // Menampilkan data
       document.getElementById('data').innerHTML = `
-        <p>LILAS: ${res.lilas.toLocaleString()}</p>
-        <p>ANJAS: ${res.anjas.toLocaleString()}</p>
+        <p>LILAS: Rp ${res.lilas.toLocaleString()}</p>
+        <p>ANJAS: Rp ${res.anjas.toLocaleString()}</p>
       `;
+    })
+    .catch(err => {
+      document.getElementById('data').innerHTML = "ERROR: Gagal tarik data. Cek Deployment!";
+      console.error(err);
     });
 
-  // 2. Countdown (Set target waktu lo di sini)
+  // Countdown
   const targetDate = new Date("Dec 31, 2026 23:59:59").getTime();
   setInterval(() => {
     const now = new Date().getTime();
     const diff = targetDate - now;
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
-    document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+    document.getElementById('timer').innerHTML = `Sisa waktu: ${d} hari lagi`;
   }, 1000);
 </script>
 

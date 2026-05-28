@@ -3,24 +3,68 @@
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; text-align: center; padding: 20px; margin: 0; }
-    .container { max-width: 500px; margin: auto; }
-    h1 { font-weight: 900; letter-spacing: -1px; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
-    .box { background: #1e293b; padding: 15px 5px; border-radius: 12px; border: 1px solid #334155; }
-    .num { display: block; font-size: 1.5rem; font-weight: 800; color: #38bdf8; }
-    .lab { font-size: 0.6rem; text-transform: uppercase; color: #94a3b8; }
-    .card { background: #1e293b; border-radius: 20px; padding: 25px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-    .row { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; }
+    body { 
+      background: #0f172a; 
+      color: white; 
+      font-family: 'Inter', sans-serif; 
+      text-align: center; 
+      padding: 20px; 
+      margin: 0; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container { max-width: 500px; width: 100%; }
+    h1 { 
+      font-weight: 900; 
+      letter-spacing: -1px; 
+      background: linear-gradient(to right, #38bdf8, #818cf8); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      margin-bottom: 5px;
+      font-size: 2rem;
+    }
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 10px; 
+      margin-bottom: 25px; 
+    }
+    .box { 
+      background: #1e293b; 
+      padding: 15px 5px; 
+      border-radius: 12px; 
+      border: 1px solid #334155; 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    .num { display: block; font-size: 1.6rem; font-weight: 800; color: #38bdf8; }
+    .lab { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+    
+    .card { 
+      background: #1e293b; 
+      border-radius: 20px; 
+      padding: 25px; 
+      border: 1px solid #334155; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+    }
+    .row { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 15px 0; 
+    }
     .row:first-child { border-bottom: 1px solid #334155; }
-    .name { color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
-    .val { font-weight: 700; color: #10b981; font-size: 1.1rem; }
+    .name { color: #94a3b8; font-weight: 600; font-size: 0.9rem; text-align: left; }
+    .val { font-weight: 700; color: #10b981; font-size: 1.2rem; text-align: right; }
+    
+    .status { font-size: 0.7rem; color: #475569; margin-top: 20px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>The Final Countdown</h1>
-    <p style="color:#64748b; margin-bottom:30px; font-size: 0.8rem;">Target: 29 Agustus 2026 • 20:00 WIB</p>
+    <p style="color:#64748b; margin-bottom:30px; font-size: 0.9rem;">Resign Date: 29 Agustus 2026 • 20:00 WIB</p>
 
     <div class="grid">
       <div class="box"><span class="num" id="d">00</span><span class="lab">Hari</span></div>
@@ -34,33 +78,51 @@
         <span class="name">LILAS | SEPT '24</span>
         <span class="val" id="lilas">Rp 0</span>
       </div>
-      <div class="row" style="margin-bottom: 0; padding-bottom: 0;">
+      <div class="row">
         <span class="name">ANJAS | SEPT '24</span>
         <span class="val" id="anjas">Rp 0</span>
       </div>
     </div>
+    
+    <p class="status">Data otomatis sinkron dengan Spreadsheet setiap 1 menit</p>
   </div>
 
   <script>
+    // 1. TANGGAL TARGET (Sudah di-set ke 2026)
     const target = new Date('August 29, 2026 20:00:00').getTime();
-    setInterval(() => {
-      const diff = target - new Date().getTime();
-      if (diff > 0) {
-        document.getElementById('d').innerText = Math.floor(diff / 86400000);
-        document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000);
-        document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000);
-        document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000);
-      }
-    }, 1000);
 
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = target - now;
+
+      if (diff > 0) {
+        document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+      } else {
+        document.querySelector('.grid').innerHTML = "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:800; padding: 10px;'>FREEDOM DAY! 🚀</div>";
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 2. AMBIL DATA DARI SPREADSHEET
     function loadData() {
       google.script.run.withSuccessHandler(res => {
-        const fmt = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n);
+        const fmt = n => new Intl.NumberFormat('id-ID', { 
+          style: 'currency', 
+          currency: 'IDR', 
+          minimumFractionDigits: 0 
+        }).format(n);
+        
         document.getElementById('lilas').innerText = fmt(res.lilas);
         document.getElementById('anjas').innerText = fmt(res.anjas);
       }).getDataTabungan();
     }
     
+    // Panggil saat pertama buka dan setiap 60 detik
     loadData();
     setInterval(loadData, 60000); 
   </script>

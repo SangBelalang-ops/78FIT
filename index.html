@@ -1,71 +1,224 @@
-<div class="card" style="border-left: 3px solid #00f2ff; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);">
-    <h3>STATUS HOLD COMM RULES</h3>
-    
-    <div id="hold-data-container">
-        <p style="text-align: center; color: #7a8a9e;">Memuat data dari Spreadsheet...</p>
-    </div>
-</div>
-
-<script>
-    // GANTI LINK INI dengan link CSV dari "Publish to Web" Anda
-    const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_g7zOlv0uGZ_M_p_Mh_Your_Published_ID/pub?gid=0&single=true&output=csv";
-
-    async function fetchSheetData() {
-        try {
-            const response = await fetch(sheetCsvUrl);
-            const data = await response.text();
-            
-            // Parsing CSV sederhana
-            const rows = data.split('\n').map(row => row.split(','));
-            
-            /* Asumsi berdasarkan permintaan Anda (A22:B24):
-               Row 21 (Index 21) = A22 & B22 (LILAS)
-               Row 22 (Index 22) = A23 & B23 (ANJAS)
-            */
-            
-            const lilasLabel = rows[21][0]; // Kolom A22
-            const lilasVal = rows[21][1];   // Kolom B22
-            const anjasLabel = rows[22][0]; // Kolom A23
-            const anjasVal = rows[22][1];   // Kolom B23
-
-            const container = document.getElementById('hold-data-container');
-            container.innerHTML = `
-                <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px;">
-                    <div>
-                        <span style="color: #00f2ff; font-weight: 700; font-size: 1.1rem;">${lilasLabel}</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem;">S&K RULES A22:B22</small>
-                    </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">${formatNumber(lilasVal)}</span>
-                </div>
-                
-                <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px; margin-top: 15px; border-top: 1px solid #1a2636; padding-top: 15px; margin-bottom: 0;">
-                    <div>
-                        <span style="color: #e01e37; font-weight: 700; font-size: 1.1rem;">${anjasLabel}</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem;">S&K RULES A23:B23</small>
-                    </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">${formatNumber(anjasVal)}</span>
-                </div>
-            `;
-        } catch (error) {
-            console.error("Gagal memuat data:", error);
-            document.getElementById('hold-data-container').innerHTML = "<p style='color: #e01e37;'>Gagal sinkronisasi data.</p>";
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Final Countdown</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
-    }
 
-    function formatNumber(num) {
-        if(!num) return "0";
-        // Menghilangkan karakter non-angka dan memformat ke ribuan
-        const cleanNum = num.replace(/[^0-9]/g, '');
-        return new Intl.NumberFormat('id-ID').format(cleanNum);
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-    // Panggil fungsi saat web dibuka
-    window.addEventListener('load', () => {
-        initRoadmap();
-        initParticles();
-        animateParticles();
-        fetchSheetData(); 
-    });
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    // Kode Countdown dan Particles tetap sama seperti sebelumnya...
-</script>
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.05em;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Countdown Styles */
+        .countdown-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .time-box {
+            background: var(--card-bg);
+            padding: 20px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .time-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        /* Tracker Kas/Tabungan Styles */
+        .tracker-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .tracker-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #10b981; /* Green Accent untuk Uang */
+            letter-spacing: -0.02em;
+        }
+
+        .loading {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @media (max-width: 480px) {
+            .time-num { font-size: 1.8rem; }
+            .balance { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>FREEDOM COUNTDOWN</h1>
+        <p class="subtitle">Menuju 29 Agustus 2026 • 20:00 WIB</p>
+
+        <!-- Live Countdown -->
+        <div class="countdown-container">
+            <div class="time-box">
+                <div class="time-num" id="days">00</div>
+                <div class="time-label">Hari</div>
+            </div>
+            <div class="time-box">
+                <div class="time-num" id="hours">00</div>
+                <div class="time-label">Jam</div>
+            </div>
+            <div class="time-box">
+                <div class="time-num" id="minutes">00</div>
+                <div class="time-label">Menit</div>
+            </div>
+            <div class="time-box">
+                <div class="time-num" id="seconds">00</div>
+                <div class="time-label">Detik</div>
+            </div>
+        </div>
+
+        <!-- Finansial Tracker -->
+        <div class="tracker-box">
+            <div class="tracker-label">Total Tabungan Terkumpul</div>
+            <div id="balance-display" class="loading">Menghubungkan ke Spreadsheet...</div>
+        </div>
+    </div>
+
+    <script>
+        // === KONFIGURASI COUNTDOWN ===
+        // Set target: 29 Agustus 2026, Jam 20:00:00
+        const targetDate = new Date('August 29, 2026 20:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                document.querySelector('.countdown-container').innerHTML = "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:600;'>Waktunya Keluar! 🚀</div>";
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+
+        // === KONFIGURASI API SPREADSHEET ===
+        // GANTI URL di bawah ini dengan URL Web App Apps Script yang sudah lo deploy tadi
+        const appsScriptUrl = 'URL_WEB_APP_APPS_SCRIPT_LO';
+
+        async function fetchBalance() {
+            const displayEl = document.getElementById('balance-display');
+            try {
+                const response = await fetch(appsScriptUrl);
+                const data = await response.json();
+                
+                if (data.error) {
+                    displayEl.innerText = "Error data sheet";
+                    displayEl.className = "time-label";
+                    return;
+                }
+
+                // Format angka ke Rupiah currency style
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                });
+
+                displayEl.innerText = formatter.format(data.total);
+                displayEl.className = "balance";
+
+            } catch (error) {
+                console.error("Gagal mengambil data:", error);
+                displayEl.innerText = "Gagal memuat data";
+                displayEl.className = "time-label";
+            }
+        }
+
+        // Ambil data tabungan saat halaman pertama dibuka
+        fetchBalance();
+        
+        // Refresh otomatis data tabungan tiap 5 menit (300000 ms) biar ga boncos limit hit API-nya
+        setInterval(fetchBalance, 300000);
+    </script>
+</body>
+</html>

@@ -9,7 +9,7 @@
     <style>
         body {
             background-color: #050b14;
-            background-image: linear-gradient(rgba(5, 11, 20, 0.8), rgba(5, 11, 20, 0.9)), url('https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1920'); /* Latar belakang bandara/pesawat estetik */
+            background-image: linear-gradient(rgba(5, 11, 20, 0.8), rgba(5, 11, 20, 0.9)), url('https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1920');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -27,7 +27,6 @@
             position: relative;
         }
 
-        /* --- BACKGROUND ANIMATION PARTICLES --- */
         #particles {
             position: fixed;
             top: 0;
@@ -51,7 +50,6 @@
 
         .container { width: 100%; max-width: 450px; }
 
-        /* --- H1: ANIMATED GLOW & SHINE --- */
         h1 {
             font-family: 'Anton', sans-serif;
             font-size: 3.5rem;
@@ -64,15 +62,15 @@
             overflow: hidden;
         }
 
-        .lilas {
-            color: #002f6c; /* Warna Biru Bendera Cambodia */
+        .lilas-title {
+            color: #002f6c;
             text-shadow: 0 0 15px rgba(0, 47, 108, 0.8), 0 0 2px #fff;
             display: block;
             font-size: 2.2rem;
         }
 
         .oor {
-            color: #e01e37; /* Warna Merah Bendera Cambodia */
+            color: #e01e37;
             display: block;
             font-size: 3.8rem;
             text-shadow: 0 0 20px rgba(224, 30, 55, 0.6);
@@ -97,7 +95,6 @@
             100% { left: 150%; }
         }
 
-        /* --- ROADMAP SIDEBAR --- */
         .setlist-sidebar {
             flex: 1;
             padding: 20px;
@@ -144,7 +141,6 @@
         .encore-label { color: #00ff88; font-weight: 700; text-shadow: 0 0 10px rgba(0,255,136,0.3); }
         .encore-label::before { content: '🇮🇩'; }
 
-        /* --- CARD STYLE: NEON INDUSTRIAL --- */
         .card {
             background: rgba(3, 7, 15, 0.9);
             padding: 25px 20px;
@@ -162,7 +158,6 @@
             margin-bottom: 20px;
         }
 
-        /* --- COUNTDOWN: PULSING ANIMATION --- */
         .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         
         .timer-box {
@@ -183,7 +178,6 @@
             animation: pulseGlow 2s infinite alternate;
         }
 
-        /* Efek Kedip/Pulse Keren pada Angka */
         @keyframes pulseGlow {
             0% { transform: scale(1); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
             100% { transform: scale(1.03); text-shadow: 0 0 20px rgba(0, 242, 255, 0.9), 0 0 30px rgba(0, 242, 255, 0.4); }
@@ -191,7 +185,6 @@
 
         .timer-box small { font-size: 0.75rem; opacity: 0.6; letter-spacing: 1px; display: block; margin-top: 5px; }
 
-        /* --- BUTTONS --- */
         button {
             font-family: 'Anton', sans-serif;
             width: 100%; padding: 15px; 
@@ -222,17 +215,15 @@
 </head>
 <body>
 
-    <!-- Canvas Efek Partikel Melayang -->
     <canvas id="particles"></canvas>
 
     <div class="main-wrapper">
         <div class="container">
             <h1>
-                <span class="lilas">HARI KEBEBASAN</span>
+                <span class="lilas-title">HARI KEBEBASAN</span>
                 <span class="oor">DARI CAMBODIA </span>
             </h1>
             
-            <!-- CARD 1: COUNTDOWN -->
             <div class="card">
                 <h3>COUNTDOWN PULANG KE INDONESIA (29 AGUSTUS)</h3>
                 <div class="timer-grid">
@@ -243,7 +234,6 @@
                 </div>
             </div>
 
-            <!-- CARD 2: MISI KONTRAK -->
             <div class="card">
                 <h3>MISI AKHIR KONTRAK</h3>
                 <div class="item"><input type="checkbox"> Selesaikan Serah Terima Pekerjaan</div>
@@ -253,29 +243,28 @@
                 <button onclick="alert('Semangat Bro! Hitung mundur terus menuju tanah air!')">SAYONARA CAMBODIA!</button>
             </div>
 
-            <!-- CARD 3: DATA SPREADSHEET RULES A22:B24 (HOLD 25%) -->
+            <!-- FIXED CARD: DATA SPREADSHEET RULES A22:B24 DENGAN NOMINAL ASLI -->
             <div class="card" style="border-left: 3px solid #00f2ff; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);">
-                <h3>STATUS HOLD COMM RULES (25%)</h3>
+                <h3>STATUS HOLD COMM RULES</h3>
                 
                 <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px;">
                     <div>
                         <span style="color: #00f2ff; font-weight: 700; font-size: 1.1rem;">LILAS</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">CELL A22:B22</small>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">S&K RULES A22:B22</small>
                     </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">HOLD 25%</span>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">4,097,246</span>
                 </div>
                 
                 <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px; margin-top: 15px; border-top: 1px solid #1a2636; padding-top: 15px; margin-bottom: 0;">
                     <div>
                         <span style="color: #e01e37; font-weight: 700; font-size: 1.1rem;">ANJAS</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">CELL A23:B23</small>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">S&K RULES A23:B23</small>
                     </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">HOLD 25%</span>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">227,754</span>
                 </div>
             </div>
         </div>
 
-        <!-- SIDEBAR ROADMAP -->
         <div class="setlist-sidebar">
             <div class="setlist-title">ROADMAP MENUJU KEBEBASAN</div>
             <div id="setlist-content"></div>
@@ -283,7 +272,6 @@
     </div>
 
     <script>
-        // Data Perjalanan Pulang
         const roadmap = [
             "Bulan-Bulan Terakhir Bertahan", "Mulai Hitung Mundur Masif", 
             "Berburu Oleh-Oleh Khas Cambodia", "Momen Perpisahan Teman Kerja", 
@@ -307,7 +295,6 @@
             });
         }
 
-        // TARGET COUNTDOWN: 29 Agustus 2026 Jam 00:00:00
         const targetDate = new Date("August 29, 2026 00:00:00").getTime();
         
         setInterval(() => {
@@ -328,7 +315,6 @@
             document.getElementById("seconds").innerText = String(Math.floor((dist % 60000) / 1000)).padStart(2, '0');
         }, 1000);
 
-        // --- ANIMASI PARTIKEL LATAR BELAKANG ---
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -346,7 +332,7 @@
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * -1 - 0.5; // Bergerak ke atas
+                this.speedY = Math.random() * -1 - 0.5;
                 this.color = Math.random() > 0.5 ? 'rgba(0, 242, 255, 0.3)' : 'rgba(224, 30, 55, 0.3)';
             }
             update() {

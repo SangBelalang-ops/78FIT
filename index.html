@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Final Countdown</title>
+    <title>Freedom Countdown & Kas Monitoring</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --accent-color: #38bdf8;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --success-green: #10b981;
         }
 
         * {
@@ -32,31 +33,34 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             text-align: center;
         }
 
         h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             letter-spacing: -0.05em;
             margin-bottom: 8px;
-            color: var(--text-main);
+            text-transform: uppercase;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
             font-size: 1rem;
             color: var(--text-muted);
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
-        /* Countdown Styles */
+        /* Countdown Grid */
         .countdown-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .time-box {
@@ -64,11 +68,11 @@
             padding: 20px 10px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
 
         .time-num {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 700;
             color: var(--accent-color);
             line-height: 1;
@@ -76,55 +80,100 @@
         }
 
         .time-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
         }
 
-        /* Tracker Kas/Tabungan Styles */
-        .tracker-box {
+        /* Tracker Card */
+        .tracker-main {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
         }
 
-        .tracker-label {
-            font-size: 0.9rem;
+        .tracker-title {
+            font-size: 0.85rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+            margin-bottom: 25px;
+            font-weight: 600;
         }
 
-        .balance {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #10b981; /* Green Accent untuk Uang */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        .member-box {
+            text-align: left;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .member-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .member-amount {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .total-box {
+            text-align: center;
+        }
+
+        .total-label {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .balance-total {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success-green);
             letter-spacing: -0.02em;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
 
-        .loading {
-            font-size: 1.2rem;
+        .status-msg {
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-style: italic;
+            padding: 20px 0;
         }
 
         @media (max-width: 480px) {
-            .time-num { font-size: 1.8rem; }
-            .balance { font-size: 1.8rem; }
+            .time-num { font-size: 1.6rem; }
+            .split-grid { grid-template-columns: 1fr; }
+            .balance-total { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>FREEDOM COUNTDOWN</h1>
-        <p class="subtitle">Menuju 29 Agustus 2026 • 20:00 WIB</p>
+        <h1>The Final Countdown</h1>
+        <p class="subtitle">Sampai 29 Agustus 2026 • 20:00 WIB</p>
 
-        <!-- Live Countdown -->
         <div class="countdown-container">
             <div class="time-box">
                 <div class="time-num" id="days">00</div>
@@ -144,16 +193,33 @@
             </div>
         </div>
 
-        <!-- Finansial Tracker -->
-        <div class="tracker-box">
-            <div class="tracker-label">Total Tabungan Terkumpul</div>
-            <div id="balance-display" class="loading">Menghubungkan ke Spreadsheet...</div>
+        <div class="tracker-main">
+            <div class="tracker-title">Monitoring Tabungan Mandiri</div>
+            
+            <div id="loading-state" class="status-msg">Menyambungkan ke API Google Sheets...</div>
+
+            <div id="data-state" style="display: none;">
+                <div class="split-grid">
+                    <div class="member-box">
+                        <div class="member-name">Tabungan Anjas</div>
+                        <div id="anjas-amount" class="member-amount">Rp 0</div>
+                    </div>
+                    <div class="member-box">
+                        <div class="member-name">Tabungan Lilas</div>
+                        <div id="lilas-amount" class="member-amount">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="total-box">
+                    <div class="total-label">Total Akumulasi</div>
+                    <div id="total-amount" class="balance-total">Rp 0</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // === KONFIGURASI COUNTDOWN ===
-        // Set target: 29 Agustus 2026, Jam 20:00:00
+        // 1. KONFIGURASI TARGET WAKTU
         const targetDate = new Date('August 29, 2026 20:00:00').getTime();
 
         function updateCountdown() {
@@ -161,7 +227,8 @@
             const difference = targetDate - now;
 
             if (difference < 0) {
-                document.querySelector('.countdown-container').innerHTML = "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:600;'>Waktunya Keluar! 🚀</div>";
+                document.querySelector('.countdown-container').innerHTML = 
+                    "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:700;'>FREEDOM! 🚀</div>";
                 clearInterval(countdownInterval);
                 return;
             }
@@ -181,43 +248,44 @@
         updateCountdown();
 
 
-        // === KONFIGURASI API SPREADSHEET ===
-        // GANTI URL di bawah ini dengan URL Web App Apps Script yang sudah lo deploy tadi
-        const appsScriptUrl = 'URL_WEB_APP_APPS_SCRIPT_LO';
+        // 2. KONFIGURASI API SPREADSHEET
+        const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyxbr3S0WQ4Cx4n4cpqx8K7O869xCTxUibmgA5tzuRmfeKjAY2XpSL_T_ZmWX7EwaULAQ/exec';
+
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        });
 
         async function fetchBalance() {
-            const displayEl = document.getElementById('balance-display');
             try {
                 const response = await fetch(appsScriptUrl);
                 const data = await response.json();
                 
                 if (data.error) {
-                    displayEl.innerText = "Error data sheet";
-                    displayEl.className = "time-label";
+                    document.getElementById('loading-state').innerText = "Gagal memproses data.";
                     return;
                 }
 
-                // Format angka ke Rupiah currency style
-                const formatter = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                });
+                // Update data nominal
+                document.getElementById('anjas-amount').innerText = formatter.format(data.anjas);
+                document.getElementById('lilas-amount').innerText = formatter.format(data.lilas);
+                document.getElementById('total-amount').innerText = formatter.format(data.totalGabungan);
 
-                displayEl.innerText = formatter.format(data.total);
-                displayEl.className = "balance";
+                // Tampilkan dashboard
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('data-state').style.display = 'block';
 
             } catch (error) {
-                console.error("Gagal mengambil data:", error);
-                displayEl.innerText = "Gagal memuat data";
-                displayEl.className = "time-label";
+                console.error("API Error:", error);
+                document.getElementById('loading-state').innerText = "Koneksi Gagal (Periksa API)";
             }
         }
 
-        // Ambil data tabungan saat halaman pertama dibuka
+        // Jalankan fetch saat load
         fetchBalance();
         
-        // Refresh otomatis data tabungan tiap 5 menit (300000 ms) biar ga boncos limit hit API-nya
+        // Refresh otomatis setiap 5 menit
         setInterval(fetchBalance, 300000);
     </script>
 </body>

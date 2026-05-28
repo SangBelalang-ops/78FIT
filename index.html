@@ -201,6 +201,7 @@
             transition: all 0.3s ease;
             letter-spacing: 2px;
             box-shadow: 0 5px 15px rgba(224, 30, 55, 0.4);
+            margin-top: 10px;
         }
         button:hover { 
             background: #ffffff; color: #000; 
@@ -231,6 +232,7 @@
                 <span class="oor">DARI CAMBODIA </span>
             </h1>
             
+            <!-- CARD 1: COUNTDOWN -->
             <div class="card">
                 <h3>COUNTDOWN PULANG KE INDONESIA (29 AGUSTUS)</h3>
                 <div class="timer-grid">
@@ -241,6 +243,7 @@
                 </div>
             </div>
 
+            <!-- CARD 2: MISI KONTRAK -->
             <div class="card">
                 <h3>MISI AKHIR KONTRAK</h3>
                 <div class="item"><input type="checkbox"> Selesaikan Serah Terima Pekerjaan</div>
@@ -249,8 +252,30 @@
                 <div class="item"><input type="checkbox"> Tukar Sisa Mata Uang Riel/USD</div>
                 <button onclick="alert('Semangat Bro! Hitung mundur terus menuju tanah air!')">SAYONARA CAMBODIA!</button>
             </div>
+
+            <!-- CARD 3: DATA SPREADSHEET RULES A22:B24 (HOLD 25%) -->
+            <div class="card" style="border-left: 3px solid #00f2ff; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);">
+                <h3>STATUS HOLD COMM RULES (25%)</h3>
+                
+                <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px;">
+                    <div>
+                        <span style="color: #00f2ff; font-weight: 700; font-size: 1.1rem;">LILAS</span>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">CELL A22:B22</small>
+                    </div>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">HOLD 25%</span>
+                </div>
+                
+                <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px; margin-top: 15px; border-top: 1px solid #1a2636; padding-top: 15px; margin-bottom: 0;">
+                    <div>
+                        <span style="color: #e01e37; font-weight: 700; font-size: 1.1rem;">ANJAS</span>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">CELL A23:B23</small>
+                    </div>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">HOLD 25%</span>
+                </div>
+            </div>
         </div>
 
+        <!-- SIDEBAR ROADMAP -->
         <div class="setlist-sidebar">
             <div class="setlist-title">ROADMAP MENUJU KEBEBASAN</div>
             <div id="setlist-content"></div>
@@ -303,7 +328,7 @@
             document.getElementById("seconds").innerText = String(Math.floor((dist % 60000) / 1000)).padStart(2, '0');
         }, 1000);
 
-        // --- ANIMASI PARTIKEL LATAR BELAKANG TERBAIK ---
+        // --- ANIMASI PARTIKEL LATAR BELAKANG ---
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -321,7 +346,7 @@
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * -1 - 0.5; // Bergerak ke atas seperti balon/efek lega
+                this.speedY = Math.random() * -1 - 0.5; // Bergerak ke atas
                 this.color = Math.random() > 0.5 ? 'rgba(0, 242, 255, 0.3)' : 'rgba(224, 30, 55, 0.3)';
             }
             update() {

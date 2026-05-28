@@ -1,130 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    body { 
-      background: #0f172a; 
-      color: white; 
-      font-family: 'Inter', sans-serif; 
-      text-align: center; 
-      padding: 20px; 
-      margin: 0; 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container { max-width: 500px; width: 100%; }
-    h1 { 
-      font-weight: 900; 
-      letter-spacing: -1px; 
-      background: linear-gradient(to right, #38bdf8, #818cf8); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
-      margin-bottom: 5px;
-      font-size: 2rem;
-    }
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(4, 1fr); 
-      gap: 10px; 
-      margin-bottom: 25px; 
-    }
-    .box { 
-      background: #1e293b; 
-      padding: 15px 5px; 
-      border-radius: 12px; 
-      border: 1px solid #334155; 
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-    .num { display: block; font-size: 1.6rem; font-weight: 800; color: #38bdf8; }
-    .lab { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
-    
-    .card { 
-      background: #1e293b; 
-      border-radius: 20px; 
-      padding: 25px; 
-      border: 1px solid #334155; 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
-    }
-    .row { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center;
-      padding: 15px 0; 
-    }
-    .row:first-child { border-bottom: 1px solid #334155; }
-    .name { color: #94a3b8; font-weight: 600; font-size: 0.9rem; text-align: left; }
-    .val { font-weight: 700; color: #10b981; font-size: 1.2rem; text-align: right; }
-    
-    .status { font-size: 0.7rem; color: #475569; margin-top: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL | FREEDOM 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00d2ff;
+            --neon-green: #39ff14;
+            --bg-dark: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: var(--bg-dark);
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Animated Background Canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .main-ui {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff 30%, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-bar {
+            font-size: 0.7rem;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-bar::before, .status-bar::after {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: var(--neon-blue);
+        }
+
+        /* Professional Countdown */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .timer-unit {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-unit::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--neon-blue);
+        }
+
+        .val-num {
+            font-size: 3rem;
+            font-weight: 800;
+            display: block;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+
+        .val-label {
+            font-size: 0.6rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+            display: block;
+            opacity: 0.5;
+        }
+
+        /* Finance Cards */
+        .finance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.3);
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            text-align: left;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: var(--neon-blue); }
+
+        .tag { font-size: 0.6rem; color: var(--neon-blue); font-weight: bold; margin-bottom: 8px; display: block;}
+        .idr-val { font-size: 1.4rem; font-weight: 700; color: #fff; display: block; margin-bottom: 4px;}
+        .usd-val { font-size: 0.9rem; color: var(--neon-green); font-weight: 600; font-family: 'Inter', sans-serif;}
+
+        @media (max-width: 600px) {
+            .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+            .finance-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.5rem; }
+            .val-num { font-size: 2rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>The Final Countdown</h1>
-    <p style="color:#64748b; margin-bottom:30px; font-size: 0.9rem;">Resign Date: 29 Agustus 2026 • 20:00 WIB</p>
 
-    <div class="grid">
-      <div class="box"><span class="num" id="d">00</span><span class="lab">Hari</span></div>
-      <div class="box"><span class="num" id="h">00</span><span class="lab">Jam</span></div>
-      <div class="box"><span class="num" id="m">00</span><span class="lab">Menit</span></div>
-      <div class="box"><span class="num" id="s">00</span><span class="lab">Detik</span></div>
+    <div id="particles-js"></div>
+
+    <div class="main-ui">
+        <div class="container">
+            <h1>SYSTEM TERMINATION</h1>
+            <div class="status-bar">ETA: AUGUST 29, 2026</div>
+
+            <div class="countdown-grid">
+                <div class="timer-unit"><span class="val-num" id="d">00</span><span class="val-label">DAYS</span></div>
+                <div class="timer-unit"><span class="val-num" id="h">00</span><span class="val-label">HOURS</span></div>
+                <div class="timer-unit"><span class="val-num" id="m">00</span><span class="val-label">MINS</span></div>
+                <div class="timer-unit"><span class="val-num" id="s">00</span><span class="val-label">SECS</span></div>
+            </div>
+
+            <div class="finance-grid">
+                <div class="card">
+                    <span class="tag">OPERATOR: LILAS</span>
+                    <span class="idr-val" id="idr-lilas">Rp 0</span>
+                    <span class="usd-val" id="usd-lilas">$0.00</span>
+                </div>
+                <div class="card">
+                    <span class="tag">OPERATOR: ANJAS</span>
+                    <span class="idr-val" id="idr-anjas">Rp 0</span>
+                    <span class="usd-val" id="usd-anjas">$0.00</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <div class="row">
-        <span class="name">LILAS | SEPT '24</span>
-        <span class="val" id="lilas">Rp 0</span>
-      </div>
-      <div class="row">
-        <span class="name">ANJAS | SEPT '24</span>
-        <span class="val" id="anjas">Rp 0</span>
-      </div>
-    </div>
-    
-    <p class="status">Data otomatis sinkron dengan Spreadsheet setiap 1 menit</p>
-  </div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // BACKGROUND ANIMATION
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.2 },
+                "size": { "value": 2 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00d2ff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            }
+        });
 
-  <script>
-    // 1. TANGGAL TARGET (Sudah di-set ke 2026)
-    const target = new Date('August 29, 2026 20:00:00').getTime();
+        // COUNTDOWN LOGIC
+        const target = new Date('August 29, 2026 20:00:00').getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+                document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+                document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+                document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+            }
+        }
+        setInterval(updateTimer, 1000);
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = target - now;
+        // DATA SPREADSHEET & CONVERTER
+        const KURS_USD = 16300; // Lo bisa ganti kursnya di sini bro
 
-      if (diff > 0) {
-        document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-        document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-        document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-        document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-      } else {
-        document.querySelector('.grid').innerHTML = "<div style='grid-column: span 4; font-size: 1.5rem; color: #10b981; font-weight:800; padding: 10px;'>FREEDOM DAY! 🚀</div>";
-      }
-    }
+        function loadData() {
+            google.script.run.withSuccessHandler(res => {
+                const fmtIDR = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n);
+                const fmtUSD = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n / KURS_USD);
+                
+                document.getElementById('idr-lilas').innerText = fmtIDR(res.lilas);
+                document.getElementById('usd-lilas').innerText = fmtUSD(res.lilas);
+                
+                document.getElementById('idr-anjas').innerText = fmtIDR(res.anjas);
+                document.getElementById('usd-anjas').innerText = fmtUSD(res.anjas);
+            }).getDataTabungan();
+        }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // 2. AMBIL DATA DARI SPREADSHEET
-    function loadData() {
-      google.script.run.withSuccessHandler(res => {
-        const fmt = n => new Intl.NumberFormat('id-ID', { 
-          style: 'currency', 
-          currency: 'IDR', 
-          minimumFractionDigits: 0 
-        }).format(n);
-        
-        document.getElementById('lilas').innerText = fmt(res.lilas);
-        document.getElementById('anjas').innerText = fmt(res.anjas);
-      }).getDataTabungan();
-    }
-    
-    // Panggil saat pertama buka dan setiap 60 detik
-    loadData();
-    setInterval(loadData, 60000); 
-  </script>
+        loadData();
+        setInterval(loadData, 60000);
+    </script>
 </body>
 </html>

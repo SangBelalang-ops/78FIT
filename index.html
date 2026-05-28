@@ -2,22 +2,43 @@
 <html>
 <head>
   <style>
-    body { background: #000; color: #0f0; font-family: monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    .box { border: 1px solid #0f0; padding: 20px; border-radius: 10px; text-align: center; width: 300px; }
+    body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; padding-top: 50px; }
+    .box { border: 2px solid #0f0; display: inline-block; padding: 30px; border-radius: 15px; }
+    h1 { letter-spacing: 5px; text-shadow: 0 0 10px #0f0; }
+    #timer { font-size: 2em; margin: 20px 0; color: #fff; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h3>DATA TERMINAL</h3>
-    <div id="data">Memuat...</div>
-  </div>
-  <script>
-    google.script.run.withSuccessHandler(res => {
+
+<div class="box">
+  <h1>TERMINAL STATUS</h1>
+  <div id="data">Memuat data...</div>
+  <div id="timer">LOADING COUNTDOWN...</div>
+</div>
+
+<script>
+  // 1. Ambil data dari Apps Script (via fetch kalau di GitHub, atau google.script.run)
+  fetch('https://script.google.com/macros/s/AKfycbyhLuCyzJxjYI0_Ie2A_u1ABk7qZCT09Ef5EPLswZ5EEtDAORUEhfJKcl2zbh_pP8KxJA/exec') // Ganti dengan URL deployment lo
+    .then(r => r.json())
+    .then(res => {
       document.getElementById('data').innerHTML = `
         <p>LILAS: ${res.lilas.toLocaleString()}</p>
         <p>ANJAS: ${res.anjas.toLocaleString()}</p>
       `;
-    }).getDataTabungan();
-  </script>
+    });
+
+  // 2. Countdown (Set target waktu lo di sini)
+  const targetDate = new Date("Dec 31, 2026 23:59:59").getTime();
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  }, 1000);
+</script>
+
 </body>
 </html>

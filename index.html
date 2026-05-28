@@ -1,67 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@900&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon: #00d2ff; --bg: #050505; --glass: rgba(255,255,255,0.03); }
-        body { margin: 0; background: var(--bg); font-family: 'JetBrains Mono', monospace; color: white; overflow: hidden; }
-        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 1; }
-        .ui { position: relative; z-index: 2; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .container { background: var(--glass); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 600px; text-align: center; }
-        h1 { font-family: 'Inter'; font-size: 2rem; margin: 0; background: linear-gradient(#fff, #444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
-        .unit { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .val { font-size: 1.8rem; font-weight: 800; color: var(--neon); display: block; }
-        .lab { font-size: 0.6rem; opacity: 0.5; }
-        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.05); }
-        .tag { font-size: 0.6rem; color: var(--neon); display: block; margin-bottom: 5px; }
-        .idr { font-size: 1.1rem; font-weight: 700; display: block; }
-        .usd { font-size: 0.8rem; color: #39ff14; font-family: 'Inter'; }
-    </style>
+  <style>
+    body { background: #000; color: #0f0; font-family: monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .box { border: 1px solid #0f0; padding: 20px; border-radius: 10px; text-align: center; width: 300px; }
+  </style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    <div class="ui">
-        <div class="container">
-            <h1>SYSTEM TERMINATION</h1>
-            <p style="font-size:0.7rem; letter-spacing:3px; color:var(--neon)">ETA: AUG 29, 2026</p>
-            <div class="countdown">
-                <div class="unit"><span class="val" id="d">00</span><span class="lab">DAYS</span></div>
-                <div class="unit"><span class="val" id="h">00</span><span class="lab">HOURS</span></div>
-                <div class="unit"><span class="val" id="m">00</span><span class="lab">MINS</span></div>
-                <div class="unit"><span class="val" id="s">00</span><span class="lab">SECS</span></div>
-            </div>
-            <div class="cards">
-                <div class="card"><span class="tag">LILAS</span><span class="idr" id="idr-l">Rp 0</span><span class="usd" id="usd-l">$0</span></div>
-                <div class="card"><span class="tag">ANJAS</span><span class="idr" id="idr-a">Rp 0</span><span class="usd" id="usd-a">$0</span></div>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        particlesJS("particles-js", {"particles":{"number":{"value":60},"color":{"value":"#fff"},"shape":{"type":"circle"},"opacity":{"value":0.1},"size":{"value":2},"line_linked":{"enable":true,"distance":150,"color":"#00d2ff","opacity":0.1,"width":1},"move":{"enable":true,"speed":1}}});
-        const target = new Date('August 29, 2026 20:00:00').getTime();
-        setInterval(() => {
-            const diff = target - new Date().getTime();
-            if(diff>0){
-                document.getElementById('d').innerText = Math.floor(diff/86400000);
-                document.getElementById('h').innerText = Math.floor((diff%86400000)/3600000);
-                document.getElementById('m').innerText = Math.floor((diff%3600000)/60000);
-                document.getElementById('s').innerText = Math.floor((diff%60000)/1000);
-            }
-        }, 1000);
-        function load(){
-            google.script.run.withSuccessHandler(res => {
-                const fI = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(n);
-                const fU = n => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n/16300);
-                document.getElementById('idr-l').innerText = fI(res.lilas);
-                document.getElementById('usd-l').innerText = fU(res.lilas);
-                document.getElementById('idr-a').innerText = fI(res.anjas);
-                document.getElementById('usd-a').innerText = fU(res.anjas);
-            }).getDataTabungan();
-        }
-        load(); setInterval(load, 60000);
-    </script>
+  <div class="box">
+    <h3>DATA TERMINAL</h3>
+    <div id="data">Memuat...</div>
+  </div>
+  <script>
+    google.script.run.withSuccessHandler(res => {
+      document.getElementById('data').innerHTML = `
+        <p>LILAS: ${res.lilas.toLocaleString()}</p>
+        <p>ANJAS: ${res.anjas.toLocaleString()}</p>
+      `;
+    }).getDataTabungan();
+  </script>
 </body>
 </html>

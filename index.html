@@ -1,377 +1,71 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menuju Hari Kebebasan - Pulang Ke Indonesia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Chakra+Petch:wght@700&display=swap" rel="stylesheet">
+<div class="card" style="border-left: 3px solid #00f2ff; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);">
+    <h3>STATUS HOLD COMM RULES</h3>
     
-    <style>
-        body {
-            background-color: #050b14;
-            background-image: linear-gradient(rgba(5, 11, 20, 0.8), rgba(5, 11, 20, 0.9)), url('https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: 'Oswald', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            cursor: crosshair;
-            overflow-x: hidden;
-            position: relative;
-        }
+    <div id="hold-data-container">
+        <p style="text-align: center; color: #7a8a9e;">Memuat data dari Spreadsheet...</p>
+    </div>
+</div>
 
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
+<script>
+    // GANTI LINK INI dengan link CSV dari "Publish to Web" Anda
+    const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_g7zOlv0uGZ_M_p_Mh_Your_Published_ID/pub?gid=0&single=true&output=csv";
 
-        .main-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 40px;
-            max-width: 1100px;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
-        .container { width: 100%; max-width: 450px; }
-
-        h1 {
-            font-family: 'Anton', sans-serif;
-            font-size: 3.5rem;
-            text-align: center;
-            margin: 0 0 20px 0;
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lilas-title {
-            color: #002f6c;
-            text-shadow: 0 0 15px rgba(0, 47, 108, 0.8), 0 0 2px #fff;
-            display: block;
-            font-size: 2.2rem;
-        }
-
-        .oor {
-            color: #e01e37;
-            display: block;
-            font-size: 3.8rem;
-            text-shadow: 0 0 20px rgba(224, 30, 55, 0.6);
-            margin-top: 5px;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg);
-            animation: shineThrough 4s infinite ease-in-out;
-        }
-
-        @keyframes shineThrough {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        .setlist-sidebar {
-            flex: 1;
-            padding: 20px;
-            background: rgba(3, 7, 15, 0.85);
-            border-left: 3px solid #e01e37;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .setlist-title {
-            font-family: 'Anton', sans-serif;
-            font-size: 1.6rem;
-            color: #ffffff;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-
-        .song-item {
-            font-family: 'Oswald', sans-serif; 
-            font-weight: 500;
-            font-size: 1.1rem;
-            color: #aaa;
-            margin-bottom: 12px;
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-        }
-
-        .song-item::before {
-            content: '✈️';
-            margin-right: 10px;
-            font-size: 0.9rem;
-        }
-
-        .song-item.show { opacity: 1; transform: translateX(0); }
-        .song-item:hover { color: #00f2ff; border-left: 3px solid #00f2ff; padding-left: 10px; }
-        
-        .encore-label { color: #00ff88; font-weight: 700; text-shadow: 0 0 10px rgba(0,255,136,0.3); }
-        .encore-label::before { content: '🇮🇩'; }
-
-        .card {
-            background: rgba(3, 7, 15, 0.9);
-            padding: 25px 20px;
-            margin-top: 20px;
-            border: 1px solid #1a2636;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        h3 { 
-            font-family: 'Anton', sans-serif;
-            font-size: 1.2rem; 
-            letter-spacing: 2px;
-            color: #7a8a9e;
-            margin-bottom: 20px;
-        }
-
-        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        
-        .timer-box {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 10px 0;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .timer-box span { 
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 3rem; 
-            display: block;
-            color: #00f2ff;
-            text-shadow: 0 0 15px rgba(0, 242, 255, 0.7);
-            line-height: 1;
-            font-weight: 700;
-            animation: pulseGlow 2s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
-            100% { transform: scale(1.03); text-shadow: 0 0 20px rgba(0, 242, 255, 0.9), 0 0 30px rgba(0, 242, 255, 0.4); }
-        }
-
-        .timer-box small { font-size: 0.75rem; opacity: 0.6; letter-spacing: 1px; display: block; margin-top: 5px; }
-
-        button {
-            font-family: 'Anton', sans-serif;
-            width: 100%; padding: 15px; 
-            background: linear-gradient(135deg, #e01e37, #b3001b); 
-            color: #fff;
-            border: none; font-size: 1.2rem; cursor: pointer; 
-            transition: all 0.3s ease;
-            letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(224, 30, 55, 0.4);
-            margin-top: 10px;
-        }
-        button:hover { 
-            background: #ffffff; color: #000; 
-            box-shadow: 0 5px 25px rgba(255,255,255,0.6);
-            transform: translateY(-2px);
-        }
-
-        .item { display: flex; align-items: center; margin-bottom: 12px; font-weight: 500; text-transform: uppercase; color: #cbd5e1; }
-        input[type="checkbox"] { width: 18px; height: 18px; margin-right: 15px; accent-color: #e01e37; cursor: pointer; }
-
-        @media (max-width: 850px) {
-            .main-wrapper { flex-direction: column; align-items: center; }
-            .setlist-sidebar { border-left: none; border-top: 3px solid #e01e37; width: 100%; box-sizing: border-box; }
-            h1 { font-size: 2.5rem; }
-            .oor { font-size: 2.8rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <canvas id="particles"></canvas>
-
-    <div class="main-wrapper">
-        <div class="container">
-            <h1>
-                <span class="lilas-title">HARI KEBEBASAN</span>
-                <span class="oor">DARI CAMBODIA </span>
-            </h1>
+    async function fetchSheetData() {
+        try {
+            const response = await fetch(sheetCsvUrl);
+            const data = await response.text();
             
-            <div class="card">
-                <h3>COUNTDOWN PULANG KE INDONESIA (29 AGUSTUS)</h3>
-                <div class="timer-grid">
-                    <div class="timer-box"><span id="days">00</span><small>HARI</small></div>
-                    <div class="timer-box"><span id="hours">00</span><small>JAM</small></div>
-                    <div class="timer-box"><span id="minutes">00</span><small>MENIT</small></div>
-                    <div class="timer-box"><span id="seconds">00</span><small>DETIK</small></div>
-                </div>
-            </div>
+            // Parsing CSV sederhana
+            const rows = data.split('\n').map(row => row.split(','));
+            
+            /* Asumsi berdasarkan permintaan Anda (A22:B24):
+               Row 21 (Index 21) = A22 & B22 (LILAS)
+               Row 22 (Index 22) = A23 & B23 (ANJAS)
+            */
+            
+            const lilasLabel = rows[21][0]; // Kolom A22
+            const lilasVal = rows[21][1];   // Kolom B22
+            const anjasLabel = rows[22][0]; // Kolom A23
+            const anjasVal = rows[22][1];   // Kolom B23
 
-            <div class="card">
-                <h3>MISI AKHIR KONTRAK</h3>
-                <div class="item"><input type="checkbox"> Selesaikan Serah Terima Pekerjaan</div>
-                <div class="item"><input type="checkbox"> Packing Koper & Oleh-Oleh</div>
-                <div class="item"><input type="checkbox"> Beresin Dokumen & Paspor</div>
-                <div class="item"><input type="checkbox"> Tukar Sisa Mata Uang Riel/USD</div>
-                <button onclick="alert('Semangat Bro! Hitung mundur terus menuju tanah air!')">SAYONARA CAMBODIA!</button>
-            </div>
-
-            <!-- FIXED CARD: DATA SPREADSHEET RULES A22:B24 DENGAN NOMINAL ASLI -->
-            <div class="card" style="border-left: 3px solid #00f2ff; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);">
-                <h3>STATUS HOLD COMM RULES</h3>
-                
+            const container = document.getElementById('hold-data-container');
+            container.innerHTML = `
                 <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px;">
                     <div>
-                        <span style="color: #00f2ff; font-weight: 700; font-size: 1.1rem;">LILAS</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">S&K RULES A22:B22</small>
+                        <span style="color: #00f2ff; font-weight: 700; font-size: 1.1rem;">${lilasLabel}</span>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem;">S&K RULES A22:B22</small>
                     </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">4,097,246</span>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">${formatNumber(lilasVal)}</span>
                 </div>
                 
                 <div class="item" style="justify-content: space-between; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px; margin-top: 15px; border-top: 1px solid #1a2636; padding-top: 15px; margin-bottom: 0;">
                     <div>
-                        <span style="color: #e01e37; font-weight: 700; font-size: 1.1rem;">ANJAS</span>
-                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem; letter-spacing: 0;">S&K RULES A23:B23</small>
+                        <span style="color: #e01e37; font-weight: 700; font-size: 1.1rem;">${anjasLabel}</span>
+                        <small style="display: block; color: #7a8a9e; font-size: 0.7rem;">S&K RULES A23:B23</small>
                     </div>
-                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">227,754</span>
+                    <span style="color: #00ff88; font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(0,255,136,0.3);">${formatNumber(anjasVal)}</span>
                 </div>
-            </div>
-        </div>
-
-        <div class="setlist-sidebar">
-            <div class="setlist-title">ROADMAP MENUJU KEBEBASAN</div>
-            <div id="setlist-content"></div>
-        </div>
-    </div>
-
-    <script>
-        const roadmap = [
-            "Bulan-Bulan Terakhir Bertahan", "Mulai Hitung Mundur Masif", 
-            "Berburu Oleh-Oleh Khas Cambodia", "Momen Perpisahan Teman Kerja", 
-            "Clearance Kosan & Beres-beres", "Menerima Gaji & Bonus Terakhir", 
-            "Otw Bandara Phnom Penh / Siem Reap", "Check-in Pesawat Freedom Flight", 
-            "Pesawat Lepas Landas meninggalkan Kamboja", 
-            "ENCORE: Memasuki Wilayah Udara Indonesia", 
-            "ENCORE: Landing di Bandara Soekarno-Hatta / Kualanamu", 
-            "ENCORE 2: RESMI BEBAS & KUMPUL KELUARGA!"
-        ];
-
-        function initRoadmap() {
-            const container = document.getElementById('setlist-content');
-            roadmap.forEach((step, index) => {
-                const div = document.createElement('div');
-                div.className = 'song-item';
-                if(step.includes("ENCORE")) div.classList.add('encore-label');
-                div.innerText = step;
-                container.appendChild(div);
-                setTimeout(() => { div.classList.add('show'); }, 100 + (index * 200)); 
-            });
+            `;
+        } catch (error) {
+            console.error("Gagal memuat data:", error);
+            document.getElementById('hold-data-container').innerHTML = "<p style='color: #e01e37;'>Gagal sinkronisasi data.</p>";
         }
+    }
 
-        const targetDate = new Date("August 29, 2026 00:00:00").getTime();
-        
-        setInterval(() => {
-            const now = new Date().getTime();
-            const dist = targetDate - now;
-            
-            if (dist < 0) {
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                return;
-            }
+    function formatNumber(num) {
+        if(!num) return "0";
+        // Menghilangkan karakter non-angka dan memformat ke ribuan
+        const cleanNum = num.replace(/[^0-9]/g, '');
+        return new Intl.NumberFormat('id-ID').format(cleanNum);
+    }
 
-            document.getElementById("days").innerText = String(Math.floor(dist / 86400000)).padStart(2, '0');
-            document.getElementById("hours").innerText = String(Math.floor((dist % 86400000) / 3600000)).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(Math.floor((dist % 3600000) / 60000)).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(Math.floor((dist % 60000) / 1000)).padStart(2, '0');
-        }, 1000);
+    // Panggil fungsi saat web dibuka
+    window.addEventListener('load', () => {
+        initRoadmap();
+        initParticles();
+        animateParticles();
+        fetchSheetData(); 
+    });
 
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * -1 - 0.5;
-                this.color = Math.random() > 0.5 ? 'rgba(0, 242, 255, 0.3)' : 'rgba(224, 30, 55, 0.3)';
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particlesArray = [];
-            for (let i = 0; i < 70; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        window.onload = () => {
-            initRoadmap();
-            initParticles();
-            animateParticles();
-        };
-    </script>
-</body>
-</html>
+    // Kode Countdown dan Particles tetap sama seperti sebelumnya...
+</script>

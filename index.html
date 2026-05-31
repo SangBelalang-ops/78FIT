@@ -7,25 +7,26 @@
     <style>
         body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow: hidden; }
         
-        /* Animasi Pesawat Vektor (SVG) */
-        .plane { position: fixed; z-index: 1; pointer-events: none; }
-        .plane1 { top: 15%; animation: flyRight 25s linear infinite; }
-        .plane2 { top: 75%; animation: flyLeft 22s linear infinite; }
+        /* Pesawat Terbang Menyamping */
+        .plane { position: fixed; z-index: 1; pointer-events: none; width: 60px; }
+        .plane1 { top: 10%; animation: flyRight 25s linear infinite; transform: rotate(90deg); }
+        .plane2 { top: 80%; animation: flyLeft 22s linear infinite; transform: rotate(-90deg); }
         @keyframes flyRight { 0% { left: -100px; } 100% { left: 110%; } }
-        @keyframes flyLeft { 0% { left: 110%; transform: scaleX(-1); } 100% { left: -100px; transform: scaleX(-1); } }
+        @keyframes flyLeft { 0% { left: 110%; } 100% { left: -100px; } }
         
-        .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); margin-bottom: 20px; }
-        .timer-container { display: flex; gap: 15px; margin-bottom: 40px; }
+        .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .timer-container { display: flex; gap: 15px; margin: 30px 0; }
         .box { background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
         .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
 
-        /* Menu Paspor */
-        .interaction-area { display: flex; align-items: center; gap: 20px; }
+        /* Posisi Paspor Tetap di Tengah Bawah */
+        .interaction-area { position: fixed; bottom: 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         #passport-btn { width: 90px; cursor: pointer; transition: 0.3s; z-index: 100; }
-        #passport-btn:hover { transform: scale(1.1); }
-        .bubble-group { display: flex; flex-direction: column; gap: 10px; }
-        .bubble { background: rgba(255,255,255,0.2); border: 1px solid white; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; opacity: 0; transform: translateX(-20px); transition: 0.4s; pointer-events: none; }
-        .bubble.show { opacity: 1; transform: translateX(0); pointer-events: auto; }
+        
+        /* Menu Vertikal */
+        .bubble-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .bubble { background: rgba(255,255,255,0.2); border: 1px solid white; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; opacity: 0; transform: translateY(20px); transition: 0.4s; pointer-events: none; }
+        .bubble.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .bubble:hover { background: #ffeb3b; color: black; }
         
         #res { margin-top: 20px; font-size: 1.8rem; color: #ffeb3b; font-family: 'JetBrains Mono'; font-weight: bold; }
@@ -33,8 +34,8 @@
 </head>
 <body>
 
-    <svg class="plane plane1" width="50" height="50" viewBox="0 0 24 24" fill="#ffffff"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
-    <svg class="plane plane2" width="40" height="40" viewBox="0 0 24 24" fill="#ffffff" opacity="0.6"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+    <svg class="plane plane1" viewBox="0 0 24 24" fill="#ffffff"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+    <svg class="plane plane2" viewBox="0 0 24 24" fill="#ffffff" opacity="0.6"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
 
     <div class="header-title">Countdown Menuju Bebas!</div>
     <div class="timer-container">

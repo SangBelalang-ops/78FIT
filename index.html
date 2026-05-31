@@ -10,9 +10,7 @@
             font-family: 'Montserrat', sans-serif; color: white;
         }
 
-        .header-title {
-            position: absolute; top: 10%; font-size: 2rem; letter-spacing: 4px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
+        .header-title { position: absolute; top: 10%; font-size: 2rem; letter-spacing: 4px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
 
         .timer-container { display: flex; gap: 20px; }
         .box { 
@@ -22,19 +20,22 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Ikon Paspor */
+        /* Animasi Paspor Saat Hover */
         #passport-btn { 
-            position: fixed; bottom: 30px; left: 30px; width: 90px; cursor: pointer; transition: 0.3s;
+            position: fixed; bottom: 30px; left: 30px; width: 90px; 
+            cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        #passport-btn:hover { transform: scale(1.2) rotate(-15deg); }
 
-        /* Bubble Menu */
+        /* Animasi Bubble Muncul */
         .bubble {
             position: fixed; display: none; left: 140px;
             background: rgba(255,255,255,0.9); color: #333;
             padding: 15px 25px; border-radius: 50px; cursor: pointer;
             font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            animation: fadeIn 0.5s ease-in-out;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         .bubble:hover { transform: scale(1.1); background: #ffeb3b; }
     </style>
 </head>

@@ -19,11 +19,12 @@
         .box { background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
         .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
 
-        /* Posisi Paspor Tetap di Tengah Bawah */
-        .interaction-area { position: fixed; bottom: 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        #passport-btn { width: 90px; cursor: pointer; transition: 0.3s; z-index: 100; }
+        /* Paspor di Pojok Kiri Bawah */
+        .interaction-area { position: fixed; bottom: 30px; left: 30px; display: flex; flex-direction: column; gap: 10px; align-items: center; z-index: 100; }
+        #passport-btn { width: 90px; cursor: pointer; transition: 0.3s; }
+        #passport-btn:hover { transform: scale(1.1); }
         
-        /* Menu Vertikal */
+        /* Menu Vertikal di atas Paspor */
         .bubble-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .bubble { background: rgba(255,255,255,0.2); border: 1px solid white; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; opacity: 0; transform: translateY(20px); transition: 0.4s; pointer-events: none; }
         .bubble.show { opacity: 1; transform: translateY(0); pointer-events: auto; }

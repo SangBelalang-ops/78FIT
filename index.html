@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; }
+        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow: hidden; }
         
         .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
@@ -14,20 +14,19 @@
         .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
         .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
 
-        /* Radial Menu Style */
-        .interaction-area { position: fixed; bottom: 40px; left: 40px; display: flex; align-items: center; justify-content: center; width: 100px; height: 100px; }
+        /* Area Menu */
+        .interaction-area { position: fixed; bottom: 40px; left: 40px; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
         
-        .main-btn { width: 80px; cursor: pointer; transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 100; }
-        .main-btn.active { transform: rotate(180deg); }
+        .main-btn { width: 80px; cursor: pointer; transition: 0.4s; z-index: 100; }
+        .main-btn.hidden { opacity: 0; transform: scale(0); pointer-events: none; }
 
         .sub-icon { 
-            position: absolute; width: 60px; cursor: pointer; 
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: absolute; width: 60px; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0; transform: scale(0); z-index: 5;
         }
         .sub-icon.show { opacity: 1; transform: scale(1); }
         
-        /* Posisi Melingkar (Radial) */
+        /* Posisi Menu Putar */
         .sub-icon:nth-child(2) { top: -80px; left: 10px; } 
         .sub-icon:nth-child(3) { top: -40px; left: 80px; }
         .sub-icon:nth-child(4) { top: 30px; left: 80px; }
@@ -46,11 +45,11 @@
     </div>
 
     <div class="interaction-area">
-        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" class="main-btn" onclick="toggleRadial()">
+        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" class="main-btn" onclick="openMenu()">
         
-        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="sub-icon" onclick="show('LILAS')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933103.png" class="sub-icon" onclick="show('HOLD')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2875/2875418.png" class="sub-icon" onclick="show('DLL')">
+        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="sub-icon" onclick="selectMenu('LILAS')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933103.png" class="sub-icon" onclick="selectMenu('HOLD')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2875/2875418.png" class="sub-icon" onclick="selectMenu('DLL')">
     </div>
     
     <div id="res"></div>
@@ -69,15 +68,20 @@
             data.forEach(row => { if (row[0] && row[0] !== "STAFF") db[row[0].toString().toUpperCase().trim()] = row[1]; });
         }
 
-        function toggleRadial() {
-            document.querySelector('.main-btn').classList.toggle('active');
-            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.toggle('show'));
+        function openMenu() {
+            document.querySelector('.main-btn').classList.add('hidden');
+            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.add('show'));
         }
 
-        function show(name) {
+        function selectMenu(name) {
+            // Tampilkan hasil
             let val = db[name.toUpperCase()];
             let display = val ? "Rp " + val.toString().replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "Kosong";
             document.getElementById("res").innerText = name + ": " + display;
+            
+            // Kembalikan ke Paspor
+            document.querySelector('.main-btn').classList.remove('hidden');
+            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.remove('show'));
         }
 
         function updateTimer() {

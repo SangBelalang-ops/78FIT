@@ -1,86 +1,47 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- GANTI LINK GAMBAR DI BAWAH INI --- */
-        :root {
-            --bg-image: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png');
-        }
-        /* --------------------------------------- */
-
+        /* Background kamu sudah siap, jadi di sini kita buat transparan */
         body {
-            margin: 0; padding: 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--bg-image);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* Membuat background tetap saat discroll */
-            font-family: 'Inter', sans-serif;
-            color: #ffffff; display: flex; justify-content: center;
-            align-items: center; height: 100vh;
+            margin: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; font-family: sans-serif;
+            background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover;
         }
 
-        .container {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
-            padding: 40px; border-radius: 24px;
-            text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 320px;
+        .flip-container { display: flex; gap: 20px; }
+
+        /* Kotak Transparan ala Flip Clock */
+        .card {
+            background: rgba(255, 255, 255, 0.2); /* Transparansi */
+            backdrop-filter: blur(10px); /* Efek blur kaca */
+            padding: 20px 15px; border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center; color: white; width: 80px;
         }
 
-        .timer { 
-            font-size: 3.5rem; font-weight: 800; 
-            letter-spacing: -2px; color: #ffffff; 
-            margin: 15px 0; font-variant-numeric: tabular-nums;
-        }
-
-        .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #a1a1aa; }
-
-        select { 
-            padding: 12px; border-radius: 12px; border: 1px solid #444; 
-            width: 100%; background: #18181b; color: white; font-weight: 600; 
-            margin: 25px 0; cursor: pointer;
-        }
-
-        .amount { font-size: 1.2rem; font-weight: 700; color: #22c55e; }
+        .number { font-size: 3rem; font-weight: bold; }
+        .label { font-size: 0.7rem; text-transform: uppercase; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="label">Time To Freedom</div>
-        <div id="timer" class="timer">00d 00h 00m</div>
-        
-        <select id="userSelect" onchange="showBalance()">
-            <option value="">-- PILIH STAFF --</option>
-            <option value="LILAS">LILAS</option>
-            <option value="ANJAS">ANJAS</option>
-        </select>
-        
-        <div class="amount" id="saldo">IDR 0</div>
+    <div class="flip-container">
+        <div class="card"><div class="number" id="days">00</div><div class="label">Days</div></div>
+        <div class="card"><div class="number" id="hours">00</div><div class="label">Hours</div></div>
+        <div class="card"><div class="number" id="minutes">00</div><div class="label">Minutes</div></div>
     </div>
 
     <script>
-        const db = { "LILAS": "46.500.000", "ANJAS": "50.375.000" };
-
         function updateTimer() {
             const target = new Date("August 29, 2026 00:00:00").getTime();
             const now = new Date().getTime();
             const diff = target - now;
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById("timer").innerHTML = 
-                `${d}d ${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m`;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         }
-
-        function showBalance() {
-            const name = document.getElementById("userSelect").value;
-            document.getElementById("saldo").innerText = name ? "IDR " + db[name] : "IDR 0";
-        }
-
         setInterval(updateTimer, 1000);
         updateTimer();
     </script>

@@ -2,54 +2,51 @@
 <html lang="id">
 <head>
     <style>
-        /* Background & Layout */
+        /* Menggunakan visual latar belakang nuansa Kamboja & Indonesia */
         body {
             margin: 0; padding: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
-            font-family: 'Segoe UI', sans-serif;
-            color: white; display: flex; justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1549448358-757755038077?q=80&w=2000'); /* Nuansa Candi/Kamboja */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff; display: flex; justify-content: center;
             align-items: center; height: 100vh; overflow: hidden;
         }
 
-        /* Animasi Paspor */
-        .passport {
-            position: absolute; width: 60px;
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-
-        /* Container Utama */
+        /* Container dengan efek Glassmorphism */
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 25px;
-            text-align: center; border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 50px; border-radius: 30px;
+            text-align: center; border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 350px;
         }
 
-        /* Countdown Style */
-        .timer { font-size: 3rem; font-weight: 800; letter-spacing: 2px; color: #ffeb3b; text-shadow: 0 0 10px rgba(255,235,59,0.5); }
+        .timer { font-size: 2.5rem; font-weight: 700; color: #ffce00; margin: 20px 0; }
+        
+        select { 
+            padding: 12px; border-radius: 10px; border: none; 
+            width: 100%; background: #ffffff; font-weight: bold; cursor: pointer;
+        }
 
-        select { padding: 10px 20px; border-radius: 20px; border: none; margin: 20px 0; font-size: 1rem; }
+        .amount { font-size: 1.5rem; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Elemen Paspor -->
-    <img src="https://cdn-icons-png.flaticon.com/512/3203/3203926.png" class="passport" style="top: 10%; left: 10%;">
-    <img src="https://cdn-icons-png.flaticon.com/512/3203/3203926.png" class="passport" style="bottom: 10%; right: 10%;">
-
     <div class="container">
-        <h2>JOURNEY TO FREEDOM</h2>
+        <h2>Sisa Kontrak Kerja</h2>
         <div id="timer" class="timer">00d 00h 00m 00s</div>
         
         <select id="userSelect" onchange="showBalance()">
-            <option value="">-- Pilih Staff --</option>
+            <option value="">-- Pilih Nama --</option>
             <option value="LILAS">LILAS</option>
             <option value="ANJAS">ANJAS</option>
         </select>
-        <h2 id="saldo">Rp 0</h2>
+        
+        <div class="amount" id="saldo">Rp 0</div>
     </div>
 
     <script>

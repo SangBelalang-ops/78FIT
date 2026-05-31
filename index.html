@@ -47,10 +47,10 @@
                 for (let i = 21; i < rows.length; i++) {
                     const cols = rows[i].split(',');
                     if (cols.length >= 2) {
-                        const staff = cols[0].replace(/['"]+/g, '').trim().toUpperCase();
-                        const hold = cols[1].replace(/['"]+/g, '').trim();
-                        if (staff !== "STAFF" && staff !== "") {
-                            db[staff] = hold;
+                        const STAFF = cols[0].replace(/['"]+/g, '').trim().toUpperCase();
+                        const HOLD = cols[1].replace(/['"]+/g, '').trim();
+                        if (STAFF !== "STAFF" && STAFF !== "") {
+                            db[STAFF] = HOLD;
                         }
                     }
                 }

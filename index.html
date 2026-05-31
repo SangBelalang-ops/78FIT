@@ -3,48 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow-x: hidden; }
+        body { 
+            margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; 
+            font-family: 'Montserrat', sans-serif; color: white; 
+        }
         
-        .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        /* Judul Animasi */
+        .header-title { 
+            font-family: 'Bangers', cursive; font-size: 3.5rem; letter-spacing: 5px; 
+            margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            animation: float 3s ease-in-out infinite; color: #ffeb3b;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .timer-container { display: flex; gap: 15px; margin: 30px 0; }
-        .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(20px); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 80px; text-align: center; }
-        .time-val { font-family: 'JetBrains Mono'; font-size: 2rem; color: #00ffcc; }
+        .timer-container { display: flex; gap: 20px; }
         
-        .nav-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
-        #passport-btn { width: 80px; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #passport-btn:hover { transform: translateY(-10px) rotate(5deg) scale(1.1); }
-        
-        .bubble { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid white; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; opacity: 0; transform: translateY(20px); pointer-events: none; }
-        .bubble.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .bubble:hover { background: #ffeb3b; color: black; transform: scale(1.1); }
-        
-        #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; }
+        /* Box yang lebih bersih dan solid */
+        .box { 
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); 
+            padding: 25px; border-radius: 15px; text-align: center; 
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .time-val { font-size: 3rem; font-weight: 800; min-width: 80px; color: white; }
+        .label { font-size: 0.8rem; margin-bottom: 5px; font-weight: bold; color: #ffeb3b; }
+
+        #passport-btn { position: fixed; bottom: 30px; left: 30px; width: 90px; cursor: pointer; transition: 0.3s; }
+        #passport-btn:hover { transform: scale(1.1); }
+        .bubble { position: fixed; display: none; left: 140px; background: white; color: #333; padding: 15px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .bubble:hover { background: #ffeb3b; }
     </style>
 </head>
 <body>
 
     <div class="header-title">Countdown Menuju Bebas!</div>
     <div class="timer-container">
-        <div class="box"><div id="days" class="time-val">00</div><small>HARI</small></div>
-        <div class="box"><div id="hours" class="time-val">00</div><small>JAM</small></div>
-        <div class="box"><div id="minutes" class="time-val">00</div><small>MENIT</small></div>
-        <div class="box"><div id="seconds" class="time-val">00</div><small>DETIK</small></div>
+        <div class="box"><div class="label">HARI</div><div id="days" class="time-val">00</div></div>
+        <div class="box"><div class="label">JAM</div><div id="hours" class="time-val">00</div></div>
+        <div class="box"><div class="label">MENIT</div><div id="minutes" class="time-val">00</div></div>
+        <div class="box"><div class="label">DETIK</div><div id="seconds" class="time-val">00</div></div>
     </div>
 
-    <div class="nav-wrapper">
-        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
-        <div id="bubble1" class="bubble" onclick="show('LILAS')">LILAS</div>
-        <div id="bubble2" class="bubble" onclick="show('ANJAS')">ANJAS</div>
-    </div>
-    <div id="res"></div>
+    <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
+    <div id="bubble1" class="bubble" style="bottom: 120px;" onclick="show('LILAS')">LILAS</div>
+    <div id="bubble2" class="bubble" style="bottom: 50px;" onclick="show('ANJAS')">ANJAS</div>
+    <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbwPO97YPOU40Uhug6m0HdRgsJgJ7-jMnRUw7uY4wjqOOBhANiEMRRN4jn6txya3T2915w/exec';
         let db = {};
+        let lastClicked = "";
 
         function fetchData() {
             const script = document.createElement('script');
@@ -53,21 +63,39 @@
         }
 
         window.processData = function(data) {
-            data.forEach(row => { if (row[0] && row[0] !== "STAFF") db[row[0].toString().toUpperCase().trim()] = row[1]; });
+            let startIndex = -1;
+            data.forEach((row, index) => {
+                if (row[0] && row[0].toString().toUpperCase() === "STAFF") startIndex = index;
+            });
+            if (startIndex !== -1) {
+                for (let i = startIndex + 1; i < data.length; i++) {
+                    const name = data[i][0] ? data[i][0].toString().toUpperCase().trim() : "";
+                    const val = data[i][1] ? data[i][1].toString().trim() : "";
+                    if (name !== "") db[name] = val;
+                }
+            }
         }
 
         function toggleBubbles() {
-            document.querySelectorAll('.bubble').forEach(b => b.classList.toggle('show'));
+            const b1 = document.getElementById("bubble1");
+            const b2 = document.getElementById("bubble2");
+            b1.style.display = (b1.style.display === "block") ? "none" : "block";
+            b2.style.display = (b2.style.display === "block") ? "none" : "block";
         }
 
         function show(name) {
-            let val = db[name.toUpperCase()];
-            let display = val ? "Rp " + val.toString().replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "Kosong";
-            document.getElementById("res").innerText = name + ": " + display;
+            const res = document.getElementById("res");
+            if (lastClicked === name) { res.innerText = ""; lastClicked = ""; }
+            else { 
+                let rawVal = db[name.toUpperCase()];
+                let formatted = rawVal ? "Rp " + rawVal.toString().replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "Data Kosong";
+                res.innerText = name + ": " + formatted; 
+                lastClicked = name; 
+            }
         }
 
         function updateTimer() {
-            const diff = new Date("August 29, 2026 00:00:00") - new Date();
+            const diff = new Date("August 29, 2026 00:00:00").getTime() - new Date().getTime();
             document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
             document.getElementById("hours").innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)).toString().padStart(2, '0');
             document.getElementById("minutes").innerText = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2, '0');
@@ -76,6 +104,7 @@
         
         fetchData();
         setInterval(updateTimer, 1000);
+        updateTimer();
     </script>
 </body>
 </html>

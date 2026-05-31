@@ -58,16 +58,35 @@
     <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
+        <script>
         const data = { "LILAS": "Rp 46.500.000", "ANJAS": "Rp 50.375.000" };
+        let lastClicked = ""; // Variabel untuk nyimpen nama terakhir yang diklik
 
         function toggleBubbles() {
             const b1 = document.getElementById("bubble1");
             const b2 = document.getElementById("bubble2");
             b1.style.display = (b1.style.display === "block") ? "none" : "block";
             b2.style.display = (b2.style.display === "block") ? "none" : "block";
+            
+            // Kalau menu ditutup, hasil saldo juga otomatis hilang
+            if (b1.style.display === "none") {
+                document.getElementById("res").innerText = "";
+                lastClicked = "";
+            }
         }
 
-        function show(name) { document.getElementById("res").innerText = name + ": " + data[name]; }
+        function show(name) {
+            const resElement = document.getElementById("res");
+            
+            // Kalau nama yang diklik sama dengan yang terakhir, berarti mau disembunyikan
+            if (lastClicked === name) {
+                resElement.innerText = "";
+                lastClicked = "";
+            } else {
+                resElement.innerText = name + ": " + data[name];
+                lastClicked = name;
+            }
+        }
 
         function updateTimer() {
             const diff = new Date("August 29, 2026 00:00:00").getTime() - new Date().getTime();
@@ -78,6 +97,7 @@
         }
         setInterval(updateTimer, 1000);
         updateTimer();
+    </script>
     </script>
 </body>
 </html>

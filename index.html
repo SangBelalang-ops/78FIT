@@ -16,18 +16,18 @@
         .box { 
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
             padding: 20px; border-radius: 20px; text-align: center;
-            font-size: 2.5rem; font-weight: 800; min-width: 80px;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
+        .time-val { font-size: 2.5rem; font-weight: 800; min-width: 80px; }
+        .label { font-size: 0.7rem; text-transform: uppercase; margin-bottom: 10px; font-weight: bold; color: #ffeb3b; }
 
-        /* Animasi Paspor Saat Hover */
+        /* Paspor & Bubble */
         #passport-btn { 
             position: fixed; bottom: 30px; left: 30px; width: 90px; 
             cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #passport-btn:hover { transform: scale(1.2) rotate(-15deg); }
 
-        /* Animasi Bubble Muncul */
         .bubble {
             position: fixed; display: none; left: 140px;
             background: rgba(255,255,255,0.9); color: #333;
@@ -44,10 +44,10 @@
     <div class="header-title">SISA HARI KEMERDEKAAN DUNIA NYATA</div>
 
     <div class="timer-container">
-        <div class="box"><div id="days">00</div></div>
-        <div class="box"><div id="hours">00</div></div>
-        <div class="box"><div id="minutes">00</div></div>
-        <div class="box"><div id="seconds">00</div></div>
+        <div class="box"><div class="label">HARI</div><div id="days" class="time-val">00</div></div>
+        <div class="box"><div class="label">JAM</div><div id="hours" class="time-val">00</div></div>
+        <div class="box"><div class="label">MENIT</div><div id="minutes" class="time-val">00</div></div>
+        <div class="box"><div class="label">DETIK</div><div id="seconds" class="time-val">00</div></div>
     </div>
 
     <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
@@ -55,7 +55,7 @@
     <div id="bubble1" class="bubble" style="bottom: 120px;" onclick="show('LILAS')">LILAS</div>
     <div id="bubble2" class="bubble" style="bottom: 50px;" onclick="show('ANJAS')">ANJAS</div>
 
-    <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b;"></div>
+    <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
         const data = { "LILAS": "Rp 46.500.000", "ANJAS": "Rp 50.375.000" };

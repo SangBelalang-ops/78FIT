@@ -7,8 +7,8 @@
     <style>
         body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow: hidden; }
         
-        /* Animasi Pesawat SVG */
-        .plane-container { position: fixed; top: 55%; left: -200px; z-index: 1; pointer-events: none; animation: flyPath 20s linear infinite; }
+        /* Animasi Pesawat di bawah */
+        .plane-container { position: fixed; bottom: 10%; left: -200px; z-index: 1; pointer-events: none; animation: flyPath 20s linear infinite; }
         @keyframes flyPath { 0% { left: -200px; } 100% { left: 110%; } }
         
         .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: pulse 2s infinite; }
@@ -18,13 +18,13 @@
         .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
         .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
 
-        /* Menu Paspor Model Lama yang Elegant */
-        .interaction-area { position: fixed; bottom: 40px; left: 40px; display: flex; align-items: center; gap: 20px; }
+        /* Area Menu Atas-Bawah */
+        .interaction-area { position: fixed; bottom: 40px; left: 40px; display: flex; flex-direction: column-reverse; align-items: center; gap: 10px; }
         #passport-btn { width: 80px; cursor: pointer; transition: 0.3s; z-index: 100; }
-        #passport-btn:hover { transform: scale(1.1) rotate(-5deg); }
+        #passport-btn:hover { transform: scale(1.1); }
         
-        .bubble { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid white; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.4s; opacity: 0; transform: scale(0); pointer-events: none; }
-        .bubble.show { opacity: 1; transform: scale(1); pointer-events: auto; }
+        .bubble { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid white; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.4s; opacity: 0; transform: translateY(20px); pointer-events: none; }
+        .bubble.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .bubble:hover { background: #ffeb3b; color: black; }
         
         #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; font-weight: bold; height: 30px; }
@@ -33,7 +33,7 @@
 <body>
 
     <div class="plane-container">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(90deg);"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(90deg);"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
     </div>
 
     <div class="header-title">Countdown Menuju Bebas!</div>
@@ -46,8 +46,8 @@
 
     <div class="interaction-area">
         <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
-        <div id="bubble1" class="bubble" onclick="show('LILAS')">LILAS</div>
         <div id="bubble2" class="bubble" onclick="show('ANJAS')">ANJAS</div>
+        <div id="bubble1" class="bubble" onclick="show('LILAS')">LILAS</div>
     </div>
     
     <div id="res"></div>

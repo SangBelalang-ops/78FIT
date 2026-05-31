@@ -33,8 +33,7 @@
     <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
-        // GANTI LINK DI BAWAH INI DENGAN LINK PUBLISH CSV DARI GOOGLE SHEET KAMU
-        const csvUrl = 'PASTE_LINK_CSV_KAMU_DISINI'; 
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSO7svZJ0gfSm-D8P1BO-Nuwlk0zuiUIHYCkxjFGrD-LwtB265ffxgy1pbWaqIj63vcH35vGXIKVLyC/pub?gid=0&single=true&output=csv'; 
         let db = {};
         let lastClicked = "";
 
@@ -42,17 +41,16 @@
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
-                const rows = data.split('\n');
+                const rows = data.split(/\r?\n/);
+                let startReading = false;
                 
                 rows.forEach(row => {
                     const cols = row.split(',');
-                    // Mengambil kolom A (Nama) dan B (Saldo)
-                    if (cols.length >= 2) {
-                        const staff = cols[0].replace(/['"]+/g, '').trim().toUpperCase();
-                        const hold = cols[1].replace(/['"]+/g, '').trim();
-                        // Simpan ke database jika bukan header
-                        if (staff !== "STAFF") db[staff] = hold;
-                    }
+                    const name = cols[0] ? cols[0].replace(/['"]+/g, '').trim().toUpperCase() : "";
+                    const val = cols[1] ? cols[1].replace(/['"]+/g, '').trim() : "";
+                    
+                    if (name === "STAFF") { startReading = true; return; }
+                    if (startReading && name !== "") { db[name] = val; }
                 });
             } catch (e) { console.log("Gagal tarik data"); }
         }
@@ -68,7 +66,7 @@
         function show(name) {
             const res = document.getElementById("res");
             if (lastClicked === name) { res.innerText = ""; lastClicked = ""; }
-            else { res.innerText = name + ": " + (db[name] || "Data Kosong"); lastClicked = name; }
+            else { res.innerText = name + ": " + (db[name.toUpperCase()] || "Data Kosong"); lastClicked = name; }
         }
 
         function updateTimer() {

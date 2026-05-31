@@ -5,33 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow: hidden; }
+        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow-x: hidden; }
         
         .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
         .timer-container { display: flex; gap: 15px; margin: 30px 0; }
-        .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
-        .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
-
-        /* Area Menu */
-        .interaction-area { position: fixed; bottom: 40px; left: 40px; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
+        .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(20px); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 80px; text-align: center; }
+        .time-val { font-family: 'JetBrains Mono'; font-size: 2rem; color: #00ffcc; }
         
-        .main-btn { width: 80px; cursor: pointer; transition: 0.4s; z-index: 100; }
-        .main-btn.hidden { opacity: 0; transform: scale(0); pointer-events: none; }
-
-        .sub-icon { 
-            position: absolute; width: 60px; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; transform: scale(0); z-index: 5;
-        }
-        .sub-icon.show { opacity: 1; transform: scale(1); }
+        .nav-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
+        #passport-btn { width: 80px; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #passport-btn:hover { transform: translateY(-10px) rotate(5deg) scale(1.1); }
         
-        /* Posisi Menu Putar */
-        .sub-icon:nth-child(2) { top: -80px; left: 10px; } 
-        .sub-icon:nth-child(3) { top: -40px; left: 80px; }
-        .sub-icon:nth-child(4) { top: 30px; left: 80px; }
-
-        #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; font-weight: bold; }
+        .bubble { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid white; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; opacity: 0; transform: translateY(20px); pointer-events: none; }
+        .bubble.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .bubble:hover { background: #ffeb3b; color: black; transform: scale(1.1); }
+        
+        #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; }
     </style>
 </head>
 <body>
@@ -44,14 +35,11 @@
         <div class="box"><div id="seconds" class="time-val">00</div><small>DETIK</small></div>
     </div>
 
-    <div class="interaction-area">
-        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" class="main-btn" onclick="openMenu()">
-        
-        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="sub-icon" onclick="selectMenu('LILAS')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933103.png" class="sub-icon" onclick="selectMenu('HOLD')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2875/2875418.png" class="sub-icon" onclick="selectMenu('DLL')">
+    <div class="nav-wrapper">
+        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
+        <div id="bubble1" class="bubble" onclick="show('LILAS')">LILAS</div>
+        <div id="bubble2" class="bubble" onclick="show('ANJAS')">ANJAS</div>
     </div>
-    
     <div id="res"></div>
 
     <script>
@@ -68,20 +56,14 @@
             data.forEach(row => { if (row[0] && row[0] !== "STAFF") db[row[0].toString().toUpperCase().trim()] = row[1]; });
         }
 
-        function openMenu() {
-            document.querySelector('.main-btn').classList.add('hidden');
-            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.add('show'));
+        function toggleBubbles() {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.toggle('show'));
         }
 
-        function selectMenu(name) {
-            // Tampilkan hasil
+        function show(name) {
             let val = db[name.toUpperCase()];
             let display = val ? "Rp " + val.toString().replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "Kosong";
             document.getElementById("res").innerText = name + ": " + display;
-            
-            // Kembalikan ke Paspor
-            document.querySelector('.main-btn').classList.remove('hidden');
-            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.remove('show'));
         }
 
         function updateTimer() {
@@ -94,7 +76,6 @@
         
         fetchData();
         setInterval(updateTimer, 1000);
-        updateTimer();
     </script>
 </body>
 </html>

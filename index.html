@@ -1,57 +1,56 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Kontrak & Tabungan</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 50px; }
-        .card { background: #2d2d2d; padding: 30px; border-radius: 15px; display: inline-block; width: 300px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h1 { font-size: 2em; color: #00ffcc; }
-        select { padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 20px; }
-        .amount { font-size: 1.5em; font-weight: bold; color: #ffcc00; }
+        body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #1e293b; padding: 40px; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); text-align: center; width: 400px; }
+        .timer { font-size: 2.5rem; font-weight: 800; color: #38bdf8; margin: 20px 0; font-variant-numeric: tabular-nums; }
+        select { background: #334155; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; }
+        .balance-box { margin-top: 30px; padding: 20px; background: #0f172a; border-radius: 10px; }
+        .amount { font-size: 1.8rem; font-weight: bold; color: #22c55e; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>Countdown Kontrak</h2>
-        <h1 id="countdown">Loading...</h1>
-        
-        <hr>
-        
-        <h3>Cek Tabungan</h3>
-        <select id="userSelect" onchange="showData()">
-            <option value="">Pilih Nama...</option>
-            <option value="LILAS">LILAS</option>
-            <option value="ANJAS">ANJAS</option>
-        </select>
-        <p>Saldo Anda:</p>
+<div class="container">
+    <h3>Sisa Waktu Kontrak</h3>
+    <div id="timer" class="timer">00d 00h 00m 00s</div>
+    
+    <select id="userSelect" onchange="updateBalance()">
+        <option value="">-- Pilih Staff --</option>
+        <option value="LILAS">LILAS</option>
+        <option value="ANJAS">ANJAS</option>
+    </select>
+
+    <div class="balance-box">
+        <p>Total Hold 25%:</p>
         <div id="saldo" class="amount">Rp 0</div>
     </div>
+</div>
 
-    <script>
-        // Data Tabungan
-        const data = {
-            "LILAS": "Rp 46.500.000",
-            "ANJAS": "Rp 50.375.000"
-        };
+<script>
+    // Data (Nanti bisa diganti dengan fetch dari Google Sheet CSV)
+    const db = { "LILAS": "46.500.000", "ANJAS": "50.375.000" };
 
-        // Fungsi Countdown ke 29 Agustus 2026
-        function updateCountdown() {
-            const targetDate = new Date("August 29, 2026 00:00:00").getTime();
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("countdown").innerText = days + " Hari Lagi";
-        }
+    function updateTimer() {
+        const target = new Date("August 29, 2026 00:00:00").getTime();
+        const now = new Date().getTime();
+        const diff = target - now;
 
-        // Fungsi Tampil Saldo
-        function showData() {
-            const name = document.getElementById("userSelect").value;
-            document.getElementById("saldo").innerText = data[name] || "Rp 0";
-        }
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-        updateCountdown();
-    </script>
+        document.getElementById("timer").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    function updateBalance() {
+        const name = document.getElementById("userSelect").value;
+        document.getElementById("saldo").innerText = name ? "Rp " + db[name] : "Rp 0";
+    }
+
+    setInterval(updateTimer, 1000); // Jalanin tiap detik
+</script>
 </body>
 </html>

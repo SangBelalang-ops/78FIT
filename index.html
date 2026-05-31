@@ -64,18 +64,30 @@
         let lastClicked = "";
 
         async function fetchData() {
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split('\n').filter(r => r.trim() !== "");
-                for (let i = 1; i < rows.length; i++) {
-                    const cols = rows[i].split(',');
-                    if (cols.length >= 2) {
-                        db[cols[0].trim().toUpperCase()] = cols[1].trim();
-                    }
+    try {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        const rows = data.split('\n');
+        
+        // Loop mulai dari baris ke-23 (indeks 22) sesuai gambar image_b44042.png
+        // Kita lompat ke baris 23 karena header STAFF ada di sana
+        for (let i = 22; i < rows.length; i++) {
+            const cols = rows[i].split(',');
+            if (cols.length >= 2) {
+                // Bersihkan data dari karakter aneh atau kutip
+                const staff = cols[0].replace(/['"]+/g, '').trim().toUpperCase();
+                const hold = cols[1].replace(/['"]+/g, '').trim();
+                
+                if (staff !== "STAFF" && staff !== "") {
+                    db[staff] = hold;
                 }
-            } catch (e) { console.log("Gagal tarik data"); }
+            }
         }
+        console.log("Database berhasil dimuat:", db);
+    } catch (e) { 
+        console.log("Gagal tarik data"); 
+    }
+}
 
         function toggleBubbles() {
             const b1 = document.getElementById("bubble1");

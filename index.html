@@ -33,41 +33,55 @@
     <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSO7svZJ0gfSm-D8P1BO-Nuwlk0zuiUIHYCkxjFGrD-LwtB265ffxgy1pbWaqIj63vcH35vGXIKVLyC/pub?gid=0&single=true&output=csv'; 
-        let db = {};
-        let lastClicked = "";
+        <script>
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbx5NBDydh8pLayh-u8r9dkbJozXOb-4QEO7IND4NYx_-YrI1NHdYudwyvRu2qnI6ri_2w/exec';
+    let db = {};
+    let lastClicked = "";
 
-        async function fetchData() {
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                const rows = data.split(/\r?\n/);
-                let startReading = false;
+    async function fetchData() {
+        try {
+            const response = await fetch(webAppUrl);
+            const data = await response.json(); // Mengambil data JSON dari link kamu
+            
+            // Loop data mulai dari indeks 1 (karena indeks 0 adalah header)
+            for (let i = 1; i < data.length; i++) {
+                const name = data[i][0] ? data[i][0].toString().toUpperCase().trim() : "";
+                const val = data[i][1] ? data[i][1].toString().trim() : "";
                 
-                rows.forEach(row => {
-                    const cols = row.split(',');
-                    const name = cols[0] ? cols[0].replace(/['"]+/g, '').trim().toUpperCase() : "";
-                    const val = cols[1] ? cols[1].replace(/['"]+/g, '').trim() : "";
-                    
-                    if (name === "STAFF") { startReading = true; return; }
-                    if (startReading && name !== "") { db[name] = val; }
-                });
-            } catch (e) { console.log("Gagal tarik data"); }
+                if (name !== "") {
+                    db[name] = val;
+                }
+            }
+            console.log("Database berhasil dimuat:", db);
+        } catch (e) { 
+            console.error("Gagal tarik data:", e); 
         }
+    }
 
-        function toggleBubbles() {
-            const b1 = document.getElementById("bubble1");
-            const b2 = document.getElementById("bubble2");
-            b1.style.display = (b1.style.display === "block") ? "none" : "block";
-            b2.style.display = (b2.style.display === "block") ? "none" : "block";
-            if(b1.style.display === "none") { document.getElementById("res").innerText = ""; lastClicked = ""; }
-        }
+    function toggleBubbles() {
+        const b1 = document.getElementById("bubble1");
+        const b2 = document.getElementById("bubble2");
+        b1.style.display = (b1.style.display === "block") ? "none" : "block";
+        b2.style.display = (b2.style.display === "block") ? "none" : "block";
+        if(b1.style.display === "none") { document.getElementById("res").innerText = ""; lastClicked = ""; }
+    }
 
-        function show(name) {
-            const res = document.getElementById("res");
-            if (lastClicked === name) { res.innerText = ""; lastClicked = ""; }
-            else { res.innerText = name + ": " + (db[name.toUpperCase()] || "Data Kosong"); lastClicked = name; }
+    function show(name) {
+        const res = document.getElementById("res");
+        const cleanName = name.toUpperCase().trim();
+        
+        if (lastClicked === name) { 
+            res.innerText = ""; 
+            lastClicked = ""; 
+        } else { 
+            res.innerText = name + ": " + (db[cleanName] || "Data Kosong"); 
+            lastClicked = name; 
         }
+    }
+
+    fetchData();
+    // (Fungsi updateTimer tetap seperti sebelumnya)
+</script>
 
         function updateTimer() {
             const diff = new Date("August 29, 2026 00:00:00").getTime() - new Date().getTime();

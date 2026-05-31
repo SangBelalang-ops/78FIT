@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -21,7 +22,6 @@
         .time-val { font-size: 2.5rem; font-weight: 800; min-width: 80px; }
         .label { font-size: 0.7rem; text-transform: uppercase; margin-bottom: 10px; font-weight: bold; color: #ffeb3b; }
 
-        /* Paspor & Bubble */
         #passport-btn { 
             position: fixed; bottom: 30px; left: 30px; width: 90px; 
             cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -58,33 +58,37 @@
     <div id="res" style="position:fixed; bottom:20px; right:30px; font-size:1.5rem; font-weight:bold; color:#ffeb3b; text-shadow: 2px 2px 5px #000;"></div>
 
     <script>
-        const data = { "LILAS": "Rp 46.500.000", "ANJAS": "Rp 50.375.000" };
-        let lastClicked = ""; // Variabel untuk nyimpen nama terakhir yang diklik
+        // GANTI LINK DI BAWAH DENGAN LINK "PUBLISH TO WEB" (.csv) MILIKMU
+        const csvUrl = 'PASTE_LINK_PUBLISH_CSV_KAMU_DISINI'; 
+        let db = {};
+        let lastClicked = "";
+
+        async function fetchData() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').filter(r => r.trim() !== "");
+                for (let i = 1; i < rows.length; i++) {
+                    const cols = rows[i].split(',');
+                    if (cols.length >= 2) {
+                        db[cols[0].trim().toUpperCase()] = cols[1].trim();
+                    }
+                }
+            } catch (e) { console.log("Gagal tarik data"); }
+        }
 
         function toggleBubbles() {
             const b1 = document.getElementById("bubble1");
             const b2 = document.getElementById("bubble2");
             b1.style.display = (b1.style.display === "block") ? "none" : "block";
             b2.style.display = (b2.style.display === "block") ? "none" : "block";
-            
-            // Kalau menu ditutup, hasil saldo juga otomatis hilang
-            if (b1.style.display === "none") {
-                document.getElementById("res").innerText = "";
-                lastClicked = "";
-            }
+            if(b1.style.display === "none") { document.getElementById("res").innerText = ""; lastClicked = ""; }
         }
 
         function show(name) {
-            const resElement = document.getElementById("res");
-            
-            // Kalau nama yang diklik sama dengan yang terakhir, berarti mau disembunyikan
-            if (lastClicked === name) {
-                resElement.innerText = "";
-                lastClicked = "";
-            } else {
-                resElement.innerText = name + ": " + data[name];
-                lastClicked = name;
-            }
+            const res = document.getElementById("res");
+            if (lastClicked === name) { res.innerText = ""; lastClicked = ""; }
+            else { res.innerText = name + ": " + (db[name] || "N/A"); lastClicked = name; }
         }
 
         function updateTimer() {
@@ -94,9 +98,10 @@
             document.getElementById("minutes").innerText = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2, '0');
             document.getElementById("seconds").innerText = Math.floor((diff % (1000*60)) / 1000).toString().padStart(2, '0');
         }
+        
+        fetchData();
         setInterval(updateTimer, 1000);
         updateTimer();
-    </script>
     </script>
 </body>
 </html>

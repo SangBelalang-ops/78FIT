@@ -7,14 +7,10 @@
     <style>
         body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('https://i.postimg.cc/WbdvM7Nj/Gemini-Generated-Image-lsl1eflsl1eflsl1-clean-(1).png') center/cover no-repeat; font-family: 'Montserrat', sans-serif; color: white; overflow: hidden; }
         
-        /* Animasi Pesawat Vektor (SVG) */
-        .plane-container { 
-            position: fixed; top: 55%; left: -200px; z-index: 1; pointer-events: none; 
-            animation: flyPath 20s linear infinite;
-        }
+        /* Animasi Pesawat SVG */
+        .plane-container { position: fixed; top: 55%; left: -200px; z-index: 1; pointer-events: none; animation: flyPath 20s linear infinite; }
         @keyframes flyPath { 0% { left: -200px; } 100% { left: 110%; } }
         
-        /* Judul */
         .header-title { font-family: 'Bangers'; font-size: 3rem; color: #ffeb3b; text-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
@@ -22,25 +18,22 @@
         .box { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 70px; text-align: center; }
         .time-val { font-family: 'JetBrains Mono'; font-size: 1.8rem; color: #00ffcc; }
 
-        /* Area Menu */
-        .interaction-area { position: fixed; bottom: 40px; left: 40px; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
-        .main-btn { width: 80px; cursor: pointer; transition: 0.4s; z-index: 100; }
-        .main-btn.hidden { opacity: 0; transform: scale(0); pointer-events: none; }
-        .sub-icon { position: absolute; width: 60px; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0); z-index: 5; }
-        .sub-icon.show { opacity: 1; transform: scale(1); }
-        .sub-icon:nth-child(2) { top: -80px; left: 10px; } 
-        .sub-icon:nth-child(3) { top: -40px; left: 80px; }
-        .sub-icon:nth-child(4) { top: 30px; left: 80px; }
-
-        #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; font-weight: bold; }
+        /* Menu Paspor Model Lama yang Elegant */
+        .interaction-area { position: fixed; bottom: 40px; left: 40px; display: flex; align-items: center; gap: 20px; }
+        #passport-btn { width: 80px; cursor: pointer; transition: 0.3s; z-index: 100; }
+        #passport-btn:hover { transform: scale(1.1) rotate(-5deg); }
+        
+        .bubble { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid white; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.4s; opacity: 0; transform: scale(0); pointer-events: none; }
+        .bubble.show { opacity: 1; transform: scale(1); pointer-events: auto; }
+        .bubble:hover { background: #ffeb3b; color: black; }
+        
+        #res { margin-top: 20px; font-size: 1.5rem; color: #ffeb3b; font-family: 'JetBrains Mono'; font-weight: bold; height: 30px; }
     </style>
 </head>
 <body>
 
     <div class="plane-container">
-        <svg width="100" height="100" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(90deg);">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-        </svg>
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(90deg);"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
     </div>
 
     <div class="header-title">Countdown Menuju Bebas!</div>
@@ -52,10 +45,9 @@
     </div>
 
     <div class="interaction-area">
-        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" class="main-btn" onclick="openMenu()">
-        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="sub-icon" onclick="selectMenu('LILAS')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933103.png" class="sub-icon" onclick="selectMenu('HOLD')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2875/2875418.png" class="sub-icon" onclick="selectMenu('DLL')">
+        <img src="https://i.postimg.cc/nLWF8wcg/image-removebg-preview.png" id="passport-btn" onclick="toggleBubbles()">
+        <div id="bubble1" class="bubble" onclick="show('LILAS')">LILAS</div>
+        <div id="bubble2" class="bubble" onclick="show('ANJAS')">ANJAS</div>
     </div>
     
     <div id="res"></div>
@@ -74,18 +66,14 @@
             data.forEach(row => { if (row[0] && row[0] !== "STAFF") db[row[0].toString().toUpperCase().trim()] = row[1]; });
         }
 
-        function openMenu() {
-            document.querySelector('.main-btn').classList.add('hidden');
-            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.add('show'));
+        function toggleBubbles() {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.toggle('show'));
         }
 
-        function selectMenu(name) {
+        function show(name) {
             let val = db[name.toUpperCase()];
             let display = val ? "Rp " + val.toString().replace(/[^\d]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "Kosong";
             document.getElementById("res").innerText = name + ": " + display;
-            
-            document.querySelector('.main-btn').classList.remove('hidden');
-            document.querySelectorAll('.sub-icon').forEach(icon => icon.classList.remove('show'));
         }
 
         function updateTimer() {

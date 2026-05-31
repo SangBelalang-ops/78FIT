@@ -72,11 +72,26 @@
         }
 
         function show(name) {
-            const res = document.getElementById("res");
-            const cleanName = name.toUpperCase().trim();
-            if (lastClicked === name) { res.innerText = ""; lastClicked = ""; }
-            else { res.innerText = name + ": " + (db[cleanName] || "Data Kosong"); lastClicked = name; }
+    const res = document.getElementById("res");
+    const cleanName = name.toUpperCase().trim();
+    
+    if (lastClicked === name) { 
+        res.innerText = ""; 
+        lastClicked = ""; 
+    } else { 
+        let rawVal = db[cleanName];
+        
+        if (rawVal) {
+            let cleanNumber = rawVal.toString().replace(/[^\d]/g, '');
+            let formatted = "Rp " + cleanNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            
+            res.innerText = name + ": " + formatted;
+        } else {
+            res.innerText = name + ": Data Kosong";
         }
+        lastClicked = name; 
+    }
+}
 
         function updateTimer() {
             const diff = new Date("August 29, 2026 00:00:00").getTime() - new Date().getTime();
